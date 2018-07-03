@@ -1,0 +1,17 @@
+language: java
+jdk:
+	- openjdk8
+
+before_install:
+	- chmod +x gradlew
+
+stages:
+	- name: build
+	- name: acceptance
+
+jobs:
+	include:
+		- stage: build
+		  script: ./gradlew clean build -x test
+		- stage: acceptance
+		  script: ./gradlew test

@@ -1,4 +1,4 @@
-package org.jvalue.ods.auth;
+package org.jvalue.ods.userservice;
 
 import com.google.inject.AbstractModule;
 

@@ -44,7 +44,7 @@ import org.jvalue.ods.rest.v1.NotificationApi;
 import org.jvalue.ods.rest.v1.PluginApi;
 import org.jvalue.ods.rest.v1.ProcessorChainApi;
 import org.jvalue.ods.rest.v1.ProcessorSpecificationApi;
-import org.jvalue.ods.rest.v1.UserApi;
+import org.jvalue.ods.userservice.rest.v1.UserApi;
 import org.jvalue.ods.rest.v1.VersionApi;
 import org.jvalue.ods.utils.GuiceConstraintValidatorFactory;
 

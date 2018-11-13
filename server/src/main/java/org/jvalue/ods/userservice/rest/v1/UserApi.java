@@ -1,4 +1,4 @@
-package org.jvalue.ods.rest.v1;
+package org.jvalue.ods.userservice.rest.v1;
 
 import org.jvalue.commons.auth.AbstractUserDescription;
 import org.jvalue.commons.auth.BasicAuthUtils;

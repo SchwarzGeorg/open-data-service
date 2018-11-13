@@ -1,8 +1,8 @@
 package org.jvalue.ods.userservice;
 
 import com.google.inject.AbstractModule;
-
-import org.jvalue.commons.auth.AuthConfig;
+import org.jvalue.ods.userservice.auth.AuthConfig;
+;
 
 public final class AuthModule extends AbstractModule {
 

@@ -9,25 +9,19 @@ import org.jvalue.commons.auth.RestrictedTo;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-public class RemoteAuthBinder extends AbstractBinder {
+public class AuthBinder extends AbstractBinder {
 
-	private final BasicAuthenticator basicAuthenticator;
-	private final OAuthAuthenticator oAuthAuthenticator;
+	private final RemoteAuthenticator remoteAuthenticator;
 
 	@Inject
-	RemoteAuthBinder(
-		BasicAuthenticator basicAuthenticator,
-		OAuthAuthenticator oAuthAuthenticator) {
-
-		this.basicAuthenticator = basicAuthenticator;
-		this.oAuthAuthenticator = oAuthAuthenticator;
+	AuthBinder(RemoteAuthenticator remoteAuthenticator) {
+		this.remoteAuthenticator = remoteAuthenticator;
 	}
 
 
 	@Override
 	protected void configure() {
-		bind(basicAuthenticator);
-		bind(oAuthAuthenticator);
+		bind(remoteAuthenticator);
 
 		bind(RestrictedToProvider.class)
 			.to(ValueFactoryProvider.class)

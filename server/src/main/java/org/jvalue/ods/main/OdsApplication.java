@@ -12,7 +12,6 @@ import org.hibernate.validator.HibernateValidator;
 import org.hibernate.validator.HibernateValidatorConfiguration;
 import org.hibernate.validator.cfg.ConstraintMapping;
 import org.hibernate.validator.cfg.GenericConstraintDef;
-import org.jvalue.commons.auth.AuthBinder;
 import org.jvalue.commons.auth.BasicAuthUserDescription;
 import org.jvalue.commons.auth.UserManager;
 import org.jvalue.commons.auth.rest.UnauthorizedExceptionMapper;
@@ -24,8 +23,7 @@ import org.jvalue.ods.admin.monitoring.DbHealthCheck;
 import org.jvalue.ods.admin.monitoring.MonitoringModule;
 import org.jvalue.ods.admin.rest.AdminFilterChainApi;
 import org.jvalue.ods.api.processors.ProcessorReferenceChainDescription;
-import org.jvalue.ods.auth.RemoteAuthBinder;
-import org.jvalue.ods.auth.RemoteAuthenticator;
+import org.jvalue.ods.auth.AuthBinder;
 import org.jvalue.ods.data.DataModule;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.db.DbModule;
@@ -95,7 +93,7 @@ public final class OdsApplication extends Application<OdsConfig> {
 		// start data grabbing
 		environment.lifecycle().manage(injector.getInstance(DataSourceManager.class));
 		environment.jersey().getResourceConfig().register(MultiPartFeature.class);
-		environment.jersey().getResourceConfig().register(injector.getInstance(RemoteAuthBinder.class));
+		environment.jersey().getResourceConfig().register(injector.getInstance(AuthBinder.class));
 		environment.jersey().register(injector.getInstance(DataSourceApi.class));
 		environment.jersey().register(injector.getInstance(DataApi.class));
 		environment.jersey().register(injector.getInstance(ProcessorChainApi.class));

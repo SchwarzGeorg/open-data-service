@@ -8,10 +8,7 @@ import org.glassfish.jersey.server.internal.inject.AbstractContainerRequestValue
 import org.glassfish.jersey.server.internal.inject.AbstractValueFactoryProvider;
 import org.glassfish.jersey.server.internal.inject.MultivaluedParameterExtractorProvider;
 import org.glassfish.jersey.server.model.Parameter;
-import org.jvalue.commons.auth.RestrictedTo;
-import org.jvalue.commons.auth.Role;
-import org.jvalue.commons.auth.UnauthorizedException;
-import org.jvalue.commons.auth.User;
+import org.jvalue.commons.auth.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
@@ -24,19 +21,16 @@ import java.util.List;
  */
 public final class RestrictedToProvider extends AbstractValueFactoryProvider {
 
-	private final BasicAuthenticator basicAuthenticator;
-	private final OAuthAuthenticator oAuthAuthenticator;
+	private final RemoteAuthenticator remoteAuthenticator;
 
 	@Inject
 	protected RestrictedToProvider(
 			MultivaluedParameterExtractorProvider mpep,
 			ServiceLocator locator,
-			BasicAuthenticator basicAuthenticator,
-			OAuthAuthenticator oAuthAuthenticator) {
+			RemoteAuthenticator remoteAuthenticator) {
 
 		super(mpep, locator, Parameter.Source.UNKNOWN);
-		this.basicAuthenticator = basicAuthenticator;
-		this.oAuthAuthenticator = oAuthAuthenticator;
+		this.remoteAuthenticator = remoteAuthenticator;
 	}
 
 
@@ -60,8 +54,11 @@ public final class RestrictedToProvider extends AbstractValueFactoryProvider {
 
 				// check authentication
 				Optional<User> user = Optional.absent();
-				if (authHeader.startsWith("Basic ")) user = basicAuthenticator.authenticate(authHeader);
-				if (authHeader.startsWith("Bearer ")) user = oAuthAuthenticator.authenticate(authHeader);
+
+				// if basic or bearer authentication, then forward to UserService
+				if (authHeader.startsWith("Basic ")) user = remoteAuthenticator.authenticate(authHeader);
+				if (authHeader.startsWith("Bearer ")) user = remoteAuthenticator.authenticate(authHeader);
+
 				if (!user.isPresent()) return onUnauthorized(isAuthOptional);
 
 				// check authorization

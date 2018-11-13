@@ -2,15 +2,19 @@ package org.jvalue.ods.userservice.rest.v1;
 
 import com.google.common.base.Optional;
 import org.ektorp.DocumentNotFoundException;
+import org.jvalue.commons.auth.*;
+import org.jvalue.ods.userservice.auth.BasicAuthenticator;
 import org.jvalue.commons.rest.RestUtils;
-import org.jvalue.ods.userservice.auth.*;
-import org.jvalue.ods.userservice.models.*;
+import org.jvalue.ods.userservice.auth.BasicAuthenticatorOriginal;
 
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+//TODO: change imports to local ones after extraction of UserService
 
 
 @Path(AbstractApi.VERSION + "/users")
@@ -19,16 +23,23 @@ import javax.ws.rs.core.MediaType;
 public final class UserApi extends AbstractApi {
 
 	private final UserManager userManager;
-	private final BasicAuthenticator basicAuthenticator;
+	private final BasicAuthenticatorOriginal basicAuthenticator;
 	private final BasicAuthUtils basicAuthUtils;
 	private final OAuthUtils oAuthUtils;
 
+	//TODO: remove after extraction of UserService
+	BasicCredentialsRepository credentialsRepository;
+	BasicAuthUtils authenticationUtils;
+
 	@Inject
-	public UserApi(UserManager userManager, BasicAuthenticator basicAuthenticator, BasicAuthUtils basicAuthUtils, OAuthUtils oAuthUtils) {
+	public UserApi(UserManager userManager, BasicAuthenticatorOriginal basicAuthenticator, BasicAuthUtils basicAuthUtils, OAuthUtils oAuthUtils,
+				   BasicCredentialsRepository credentialsRepository, BasicAuthUtils authenticationUtils) {
 		this.userManager = userManager;
 		this.basicAuthenticator = basicAuthenticator;
 		this.basicAuthUtils = basicAuthUtils;
 		this.oAuthUtils = oAuthUtils;
+		this.credentialsRepository = credentialsRepository;
+		this.authenticationUtils = authenticationUtils;
 	}
 
 	@GET
@@ -116,6 +127,21 @@ public final class UserApi extends AbstractApi {
 		}
 	}
 
+	// TODO: remove after extracted UserService
+	// only exists in order to test the new RemoteAuthenticator
+	@GET
+	@Path("authenticate/{base64Code}")
+	@PermitAll
+	public User authenticate(@PathParam("base64Code") String base64Code) {
 
+		BasicAuthenticatorOriginal authenticator = new BasicAuthenticatorOriginal(
+			userManager,
+			credentialsRepository,
+			authenticationUtils
+		);
+		Optional<User> user = authenticator.authenticate("Basic " + base64Code);
+		if(user == null) throw new org.jvalue.ods.userservice.auth.UnauthorizedException("You are not authorized!");
+		return user.get();
+	}
 }
 

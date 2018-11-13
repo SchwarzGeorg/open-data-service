@@ -3,18 +3,23 @@ package org.jvalue.ods.userservice.auth;
 
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
-
 import org.ektorp.DocumentNotFoundException;
-import org.jvalue.ods.userservice.models.User;
-
-import java.nio.charset.StandardCharsets;
+import org.jvalue.commons.auth.Authenticator;
+import org.jvalue.commons.auth.BasicAuthUtils;
+import org.jvalue.commons.auth.BasicCredentials;
+import org.jvalue.commons.auth.BasicCredentialsRepository;
+import org.jvalue.commons.auth.*;
+import org.jvalue.commons.auth.UserManager;
 
 import javax.inject.Inject;
+import java.nio.charset.StandardCharsets;
+
+// TODO: delete after extraction of UserService
 
 /**
  * Handles basic (username + password) authentication.
  */
-public final class BasicAuthenticator implements Authenticator {
+public final class BasicAuthenticatorOriginal implements Authenticator {
 
 	private final UserManager userManager;
 	private final BasicCredentialsRepository credentialsRepository;
@@ -22,7 +27,7 @@ public final class BasicAuthenticator implements Authenticator {
 
 	//TODO: remove public adter extraction of UserService
 	@Inject
-	public BasicAuthenticator(
+	public BasicAuthenticatorOriginal(
 			UserManager userManager,
 			BasicCredentialsRepository credentialsRepository,
 			BasicAuthUtils authenticationUtils) {

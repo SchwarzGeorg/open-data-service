@@ -3,6 +3,7 @@ package org.jvalue.ods.auth;
 import com.google.common.base.Optional;
 import org.jvalue.commons.auth.Authenticator;
 import org.jvalue.commons.auth.User;
+import org.jvalue.commons.utils.Log;
 
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
@@ -35,11 +36,15 @@ public class RemoteAuthenticator implements Authenticator {
 		Client client = ClientBuilder.newClient();
 		// TODO: make retries if no connection
 
+		String token = authHeader.replaceFirst("Basic ", "");
+
 		return Optional.of(
 			client
-				.target(USER_SERVICE_PATH + "/users")
+				.target(USER_SERVICE_PATH + "/users/authenticate/" + token)
+				// TODO: as soon as UserService is extracted, change to me endpoint
 				.request(MediaType.APPLICATION_JSON)
-				.header(USER_SERVICE_AUTH_HEADER, authHeader)
+				// TODO: and pass via header:
+				//.header(USER_SERVICE_AUTH_HEADER, authHeader)
 				.get(User.class)
 		);
 	}

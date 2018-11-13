@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jvalue.ods.userservice.models.BasicAuthUserDescription;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -18,6 +19,12 @@ public class AuthConfig {
 	// oauth
 	@NotNull private final String googleOAuthWebClientId;
 	@NotNull private final List<String> googleOAuthClientIds;
+
+	public AuthConfig() { //TODO: remove as soon as UserService was extracted
+		users = new ArrayList<BasicAuthUserDescription>();
+		googleOAuthClientIds = new ArrayList<String>();
+		googleOAuthWebClientId = "";
+	}
 
 	@JsonCreator
 	public AuthConfig(

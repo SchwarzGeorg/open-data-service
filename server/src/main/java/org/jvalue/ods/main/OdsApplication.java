@@ -24,6 +24,8 @@ import org.jvalue.ods.admin.monitoring.DbHealthCheck;
 import org.jvalue.ods.admin.monitoring.MonitoringModule;
 import org.jvalue.ods.admin.rest.AdminFilterChainApi;
 import org.jvalue.ods.api.processors.ProcessorReferenceChainDescription;
+import org.jvalue.ods.auth.RemoteAuthBinder;
+import org.jvalue.ods.auth.RemoteAuthenticator;
 import org.jvalue.ods.data.DataModule;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.db.DbModule;
@@ -93,7 +95,7 @@ public final class OdsApplication extends Application<OdsConfig> {
 		// start data grabbing
 		environment.lifecycle().manage(injector.getInstance(DataSourceManager.class));
 		environment.jersey().getResourceConfig().register(MultiPartFeature.class);
-		environment.jersey().getResourceConfig().register(injector.getInstance(AuthBinder.class));
+		environment.jersey().getResourceConfig().register(injector.getInstance(RemoteAuthBinder.class));
 		environment.jersey().register(injector.getInstance(DataSourceApi.class));
 		environment.jersey().register(injector.getInstance(DataApi.class));
 		environment.jersey().register(injector.getInstance(ProcessorChainApi.class));

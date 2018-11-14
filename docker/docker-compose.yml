@@ -13,6 +13,19 @@ services:
       - COUCHDB_URL=http://couchdb:5984/
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=admin
+  userservice:
+    image: mojo-docker.cs.fau.de/osrg_ods_public/ods-userservice:latest
+    ports:
+      - "8080:8082"
+      - "8081:8083"
+    environment:
+      - COUCHDB_MAX_CONNECTIONS=100
+      - ODS_ADMIN_CONTEXT_PATH=/
+      - ODS_CONTEXT_PATH=/ods/userservice
+      - ODS_ADMIN_PASSWORD=admin123
+      - COUCHDB_URL=http://couchdb:5984/
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=admin
   couchdb:
     image: couchdb
     ports:

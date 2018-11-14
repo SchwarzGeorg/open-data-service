@@ -1,0 +1,47 @@
+apply plugin: 'application'
+apply plugin: 'de.bitdroid.githash'
+
+buildscript {
+    apply from: '../dependencies.gradle'
+
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "de.bitdroid.githash:plugin:$githashVersion"
+    }
+}
+
+mainClassName = 'org.jvalue.ods.userservice.main.UserServiceApplication'
+
+run() {
+    args 'server', 'userservice-configuration.yml'
+}
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
+    compile "io.dropwizard:dropwizard-jersey:$dropwizardVersion"
+
+	compile "com.google.inject:guice:$guiceVersion"
+	compile "com.google.inject.extensions:guice-assistedinject:$guiceVersion"
+
+	compile "javax.xml.bind:jaxb-api:$jaxbVersion"
+	compile "com.sun.xml.bind:jaxb-core:$jaxbVersion"
+	compile "com.sun.xml.bind:jaxb-impl:$jaxbVersion"
+
+	compile "javax.activation:com.springsource.javax.activation:$javaxActivationVersion"
+
+    testCompile "org.jmockit:jmockit:$jmockitVersion"
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.jvalue.commons:couchdb-test:$jvalueCommonsVersion"
+}
+
+// create java code which contains git hash
+gitHash {
+    packageName = 'org.jvalue.ods.userservice'
+    outputDir = file(generatedSourcesDir)
+}

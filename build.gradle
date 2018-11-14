@@ -180,7 +180,7 @@ configure(subprojects.findAll {it.name == 'server' || it.name == 'userservice'})
 
 	def dockerCDTag = new Date().format('yyyyMMdd-HHmm') + '.' + versionDetails().gitHash
 	def dockerRegistry = 'mojo-docker.cs.fau.de/'
-	def dockerDir = '/docker'
+	def dockerDir = 'docker'
 
 	def dockerImageName = 'osrg_ods_public/ods-' + it.name + "-cd"
 	def dockerNameLocal = dockerImageName + ':latest'

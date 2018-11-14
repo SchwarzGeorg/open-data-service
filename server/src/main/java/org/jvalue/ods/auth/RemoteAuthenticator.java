@@ -12,13 +12,15 @@ import javax.ws.rs.core.MediaType;
 
 public class RemoteAuthenticator implements Authenticator {
 
-	// TODO: get this from somewhere else (e.g. service discovery)
-	public static final String USER_SERVICE_PATH = "http://localhost:8080/ods/api/v1";
-
+	// TODO: get this from service discovery
+	public final String USER_SERVICE_PATH;
 	public static final String USER_SERVICE_AUTH_HEADER = "Authorization";
 
 	@Inject
-	public RemoteAuthenticator() {
+	public RemoteAuthenticator(
+		AuthConfig authConfig
+	) {
+		USER_SERVICE_PATH = authConfig.getUserServiceUrl();
 	}
 
 	@Override

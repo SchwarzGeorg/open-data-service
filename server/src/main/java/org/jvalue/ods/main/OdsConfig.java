@@ -3,13 +3,13 @@ package org.jvalue.ods.main;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.jvalue.commons.auth.AuthConfig;
 import org.jvalue.commons.couchdb.CouchDbConfig;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import io.dropwizard.Configuration;
+import org.jvalue.ods.auth.AuthConfig;
 
 
 public final class OdsConfig extends Configuration {

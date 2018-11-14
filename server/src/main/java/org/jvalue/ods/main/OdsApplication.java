@@ -110,9 +110,6 @@ public final class OdsApplication extends Application<OdsConfig> {
 		// v2
         environment.jersey().register(injector.getInstance(org.jvalue.ods.rest.v2.DataSourceApi.class));
 
-		// setup users
-		setupDefaultUsers(injector.getInstance(UserManager.class), configuration.getAuth().getUsers());
-
 		// setup health checks
 		environment.healthChecks().register(DbHealthCheck.class.getSimpleName(), injector.getInstance(DbHealthCheck.class));
 		environment.healthChecks().register(PegelOnlineHealthCheck.class.getSimpleName(), injector.getInstance(PegelOnlineHealthCheck.class));
@@ -149,14 +146,6 @@ public final class OdsApplication extends Application<OdsConfig> {
 				.buildValidatorFactory()
 				.getValidator());
 	}
-
-
-	private void setupDefaultUsers(UserManager userManager, List<BasicAuthUserDescription> userList) {
-		for (BasicAuthUserDescription user : userList) {
-			if (!userManager.contains(user.getEmail())) userManager.add(user);
-		}
-	}
-
 
 	private void assertCouchDbIsReady(String couchDbUrl) {
 		if (!HttpServiceCheck.check(couchDbUrl)) {

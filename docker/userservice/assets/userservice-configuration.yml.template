@@ -1,0 +1,24 @@
+
+server:
+  adminContextPath: ODS_ADMIN_CONTEXT_PATH
+  applicationContextPath: ODS_CONTEXT_PATH/api
+
+couchDb:
+  url: COUCHDB_URL
+  dbPrefix: ods
+  maxConnections: COUCHDB_MAX_CONNECTIONS
+  admin:
+    username: admin
+    password: COUCHDB_ODSADMIN_PASSWORD
+
+auth:
+    users:
+      - name: Admin
+        email: admin@adminland.com
+        role: ADMIN
+        password: ODS_ADMIN_PASSWORD
+        type: basic
+    googleOAuthWebClientId: GOOGLE_OAUTH_WEB_CLIENT_ID
+    googleOAuthClientIds:
+        - GOOGLE_OAUTH_CLIENT_ID_1
+        - GOOGLE_OAUTH_CLIENT_ID_2

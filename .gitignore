@@ -18,3 +18,6 @@ build
 
 docker/ods/assets/*.jar
 ods-configuration.yml
+
+docker/userservice/assets/*.jar
+userservice-configuration.yml

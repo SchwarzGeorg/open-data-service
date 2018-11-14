@@ -23,166 +23,211 @@ wrapper {
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'idea'
-    apply plugin: 'maven'
-    apply plugin: 'maven-publish'
-    apply plugin: "com.github.johnrengelman.shadow"
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'maven'
+	apply plugin: 'maven-publish'
+	apply plugin: "com.github.johnrengelman.shadow"
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
 
-    ext {
-        nexusPublicReleasesUrl = 'https://mojo-maven.cs.fau.de/repository/public-releases/'
-    }
+	ext {
+		nexusPublicReleasesUrl = 'https://mojo-maven.cs.fau.de/repository/public-releases/'
+	}
 
-    javadoc {
-        options.addStringOption('encoding', 'UTF-8')
+	javadoc {
+		options.addStringOption('encoding', 'UTF-8')
 
 		if (!JavaVersion.current().isJava8()) {
 			options.addBooleanOption('html5', true)
 		}
-    }
+	}
 
-    // setup generated sources (if any)
-    ext {
-        mainSourcesDir = 'src/main/java'
-        generatedSourcesDir = 'target/generated-sources/java'
-    }
-    sourceSets {
-        main {
-            java {
-                srcDir mainSourcesDir
-                srcDir generatedSourcesDir
-            }
-        }
-    }
+	// setup generated sources (if any)
+	ext {
+		mainSourcesDir = 'src/main/java'
+		generatedSourcesDir = 'target/generated-sources/java'
+	}
+	sourceSets {
+		main {
+			java {
+				srcDir mainSourcesDir
+				srcDir generatedSourcesDir
+			}
+		}
+	}
 
-    // default maven repo
-    repositories {
-        mavenLocal()
-        jcenter()
-        maven {
-            url project.ext.nexusPublicReleasesUrl
-        }
-    }
+	// default maven repo
+	repositories {
+		mavenLocal()
+		jcenter()
+		maven {
+			url project.ext.nexusPublicReleasesUrl
+		}
+	}
 
-    // show java compiler warnings
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:unchecked"
-    }
+	// show java compiler warnings
+	tasks.withType(JavaCompile) {
+		options.compilerArgs << "-Xlint:unchecked"
+	}
 
-    // one jar with all sources & dependencies
-    shadowJar {
-        baseName = project.name
-        classifier = 'all'
-        version = version
-    }
+	// one jar with all sources & dependencies
+	shadowJar {
+		baseName = project.name
+		classifier = 'all'
+		version = version
+	}
 
-    // integration test
-    def testSrcDir = file('src/integrationtest/java')
-    def testResourceDir = file('src/integrationtest/resources')
-    sourceSets {
-        integrationTest {
-            java.srcDir testSrcDir
-            resources.srcDir testResourceDir
-            compileClasspath = sourceSets.main.output + configurations.testCompile + sourceSets.test.output
-            runtimeClasspath = output + compileClasspath
-        }
-    }
+	// integration test
+	def testSrcDir = file('src/integrationtest/java')
+	def testResourceDir = file('src/integrationtest/resources')
+	sourceSets {
+		integrationTest {
+			java.srcDir testSrcDir
+			resources.srcDir testResourceDir
+			compileClasspath = sourceSets.main.output + configurations.testCompile + sourceSets.test.output
+			runtimeClasspath = output + compileClasspath
+		}
+	}
 
-    task integrationTest(type: Test) {
-        testClassesDirs = sourceSets.integrationTest.output.classesDirs
-        classpath = sourceSets.integrationTest.runtimeClasspath
+	task integrationTest(type: Test) {
+		testClassesDirs = sourceSets.integrationTest.output.classesDirs
+		classpath = sourceSets.integrationTest.runtimeClasspath
 
-        testLogging {
-            events "passed", "skipped", "failed"
+		testLogging {
+			events "passed", "skipped", "failed"
 
-            afterSuite { desc, result ->
-                if (!desc.parent) {
-                    println "Tests run: ${result.testCount}, " +
-                            "Failures: ${result.failedTestCount}, " +
-                            "Skipped: ${result.skippedTestCount}"
-                }
-            }
-        }
-    }
+			afterSuite { desc, result ->
+				if (!desc.parent) {
+					println "Tests run: ${result.testCount}, " +
+						"Failures: ${result.failedTestCount}, " +
+						"Skipped: ${result.skippedTestCount}"
+				}
+			}
+		}
+	}
 
-    test {
-        // required by jmockit
-        jvmArgs += '-Djdk.attach.allowAttachSelf'
+	test {
+		// required by jmockit
+		jvmArgs += '-Djdk.attach.allowAttachSelf'
 
-        testLogging {
-            events "passed", "skipped", "failed"
+		testLogging {
+			events "passed", "skipped", "failed"
 
-            afterSuite { desc, result ->
-                if (!desc.parent) {
-                    println "Tests run: ${result.testCount}, " +
-                            "Failures: ${result.failedTestCount}, " +
-                            "Skipped: ${result.skippedTestCount}"
-                }
-            }
-        }
-    }
+			afterSuite { desc, result ->
+				if (!desc.parent) {
+					println "Tests run: ${result.testCount}, " +
+						"Failures: ${result.failedTestCount}, " +
+						"Skipped: ${result.skippedTestCount}"
+				}
+			}
+		}
+	}
 
-    // let intellij know about 'special' folders
-    idea {
-        module {
-            testSourceDirs += testSrcDir
-            sourceDirs += file(generatedSourcesDir)
-        }
-    }
+	// let intellij know about 'special' folders
+	idea {
+		module {
+			testSourceDirs += testSrcDir
+			sourceDirs += file(generatedSourcesDir)
+		}
+	}
 
-    // publishing to nexus
-    publishing {
-    	if (!project.ext.has('nexusUsername')) {
-            project.ext.nexusUsername = ''
-        }
-        if (!project.ext.has('nexusPassword')) {
-            project.ext.nexusPassword = ''
-        }
-        publications {
-            nexusJava(MavenPublication) {
-                from components.java
-                artifact sourcesJar
-                artifact javadocJar
-            }
-        }
-        repositories {
-            maven {
-                url project.ext.nexusPublicReleasesUrl
-                credentials {
-                    username nexusUsername
-                    password nexusPassword
-                }
-            }
+	// publishing to nexus
+	publishing {
+		if (!project.ext.has('nexusUsername')) {
+			project.ext.nexusUsername = ''
+		}
+		if (!project.ext.has('nexusPassword')) {
+			project.ext.nexusPassword = ''
+		}
+		publications {
+			nexusJava(MavenPublication) {
+				from components.java
+				artifact sourcesJar
+				artifact javadocJar
+			}
+		}
+		repositories {
+			maven {
+				url project.ext.nexusPublicReleasesUrl
+				credentials {
+					username nexusUsername
+					password nexusPassword
+				}
+			}
 
-        }
-    }
+		}
+	}
 
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
+	task sourcesJar(type: Jar, dependsOn: classes) {
+		classifier = 'sources'
+		from sourceSets.main.allSource
+	}
 
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        classifier = 'javadoc'
-        from javadoc.destinationDir
-    }
+	task javadocJar(type: Jar, dependsOn: javadoc) {
+		classifier = 'javadoc'
+		from javadoc.destinationDir
+	}
 
-    artifacts {
-        archives sourcesJar, javadocJar
-    }
+	artifacts {
+		archives sourcesJar, javadocJar
+	}
 }
 
-task dockerBuild {
-	dependsOn ':server:dockerBuild'
-}
+/* make sure to include all projects that have a docker build!! */
+configure(subprojects.findAll {it.name == 'server'}) {
 
-task dockerTag {
-	dependsOn ':server:dockerTag'
-}
+	def dockerCDTag = new Date().format('yyyyMMdd-HHmm') + '.' + versionDetails().gitHash
+	def dockerRegistry = 'mojo-docker.cs.fau.de/'
+	def dockerDir = '/docker'
 
-task dockerPush {
-	dependsOn ':server:dockerPush'
+	def dockerImageName = 'osrg_ods_public/ods-' + it.name
+	def dockerNameLocal = dockerImageName + ':latest'
+	def dockerNameCD = dockerRegistry + dockerImageName + ':' + dockerCDTag
+	def dockerNameLatest = dockerRegistry + dockerNameLocal
+
+
+	task copyDockerAssets(type: Copy) {
+		dependsOn shadowJar
+		from(libsDir) {
+			include '*-all.jar'
+		}
+		into project.file(dockerDir + '/assets/')
+	}
+
+	task dockerBuild {
+		dependsOn copyDockerAssets
+		doLast {
+			exec {
+				workingDir dockerDir
+				commandLine 'docker', 'build', '-t', dockerNameLocal, '.'
+			}
+		}
+	}
+
+	task dockerTag {
+		dependsOn dockerBuild
+		doLast {
+			exec {
+				workingDir dockerDir
+				commandLine 'docker', 'tag', dockerNameLocal , dockerNameCD
+			}
+			exec {
+				workingDir dockerDir
+				commandLine 'docker', 'tag', dockerNameLocal , dockerNameLatest
+			}
+		}
+	}
+
+	task dockerPush {
+		dependsOn dockerTag
+		doLast {
+			exec {
+				workingDir dockerDir
+				commandLine 'docker', 'push', dockerRegistry + dockerImageName
+			}
+		}
+	}
+
 }

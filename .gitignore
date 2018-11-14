@@ -16,8 +16,7 @@ build
 .idea
 */out/
 
-docker/ods/assets/*.jar
-ods-configuration.yml
+**/docker/assets/*.jar
 
-docker/userservice/assets/*.jar
+ods-configuration.yml
 userservice-configuration.yml

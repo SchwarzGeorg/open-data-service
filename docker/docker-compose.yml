@@ -16,8 +16,8 @@ services:
   userservice:
     image: mojo-docker.cs.fau.de/osrg_ods_public/ods-userservice:latest
     ports:
-      - "8080:8082"
-      - "8081:8083"
+      - "8090:8080"
+      - "8091:8081"
     environment:
       - COUCHDB_MAX_CONNECTIONS=100
       - ODS_ADMIN_CONTEXT_PATH=/

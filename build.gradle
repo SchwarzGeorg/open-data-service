@@ -182,7 +182,7 @@ configure(subprojects.findAll {it.name == 'server'}) {
 	def dockerRegistry = 'mojo-docker.cs.fau.de/'
 	def dockerDir = '/docker'
 
-	def dockerImageName = 'osrg_ods_public/ods-' + it.name
+	def dockerImageName = 'osrg_ods_public/ods-' + it.name + "-cd"
 	def dockerNameLocal = dockerImageName + ':latest'
 	def dockerNameCD = dockerRegistry + dockerImageName + ':' + dockerCDTag
 	def dockerNameLatest = dockerRegistry + dockerNameLocal

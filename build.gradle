@@ -173,60 +173,16 @@ subprojects {
     artifacts {
         archives sourcesJar, javadocJar
     }
-
-    task copyDockerAssets(type: Copy) {
-        dependsOn shadowJar
-        from(libsDir) {
-            include 'server*-all.jar'
-        }
-        into rootProject.file('docker/ods/assets/')
-    }
 }
 
-def dockerCDTag = new Date().format('yyyyMMdd-HHmm') + '.' + versionDetails().gitHash
-def dockerRegistry = 'mojo-docker.cs.fau.de/'
-def dockerDir = 'docker/ods/'
-
-def dockerServerImageName = 'osrg_ods_public/ods-cd'
-def dockerServerNameLocal = dockerServerImageName+':latest'
-def dockerServerNameCD = dockerRegistry +dockerServerImageName+':' + dockerCDTag
-def dockerServerNameLatest = dockerRegistry + dockerServerNameLocal
-
-def dockerUserServiceImageName = 'osrg_ods_public/ods-cd'
-def dockerUserServiceNameLocal = dockerServerImageName+':latest'
-def dockerUserServiceNameCD = dockerRegistry +dockerServerImageName+':' + dockerCDTag
-def dockerUserServiceNameLatest = dockerRegistry + dockerServerNameLocal
-
 task dockerBuild {
-    dependsOn ':server:copyDockerAssets'
-    doLast {
-        exec {
-            workingDir dockerDir
-            commandLine 'docker', 'build', '-t', dockerServerNameLocal, '.'
-        }
-    }
+	dependsOn ':server:dockerBuild'
 }
 
 task dockerTag {
-    dependsOn dockerBuild
-      doLast {
-        exec {
-            workingDir dockerDir
-            commandLine 'docker', 'tag', dockerServerNameLocal , dockerServerNameCD
-        }
-        exec {
-            workingDir dockerDir
-            commandLine 'docker', 'tag', dockerServerNameLocal , dockerServerNameLatest
-        }
-    }
+	dependsOn ':server:dockerTag'
 }
 
 task dockerPush {
-    dependsOn dockerTag
-    doLast {
-        exec {
-            workingDir dockerDir
-            commandLine 'docker', 'push', dockerRegistry + dockerServerImageName
-        }
-    }
+	dependsOn ':server:dockerPush'
 }

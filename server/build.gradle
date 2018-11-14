@@ -67,3 +67,58 @@ gitHash {
     packageName = 'org.jvalue.ods'
     outputDir = file(generatedSourcesDir)
 }
+
+
+def dockerCDTag = new Date().format('yyyyMMdd-HHmm') + '.' + versionDetails().gitHash
+def dockerRegistry = 'mojo-docker.cs.fau.de/'
+def dockerDir = 'docker/ods/'
+
+def dockerImageName = 'osrg_ods_public/ods-cd'
+def dockerNameLocal = dockerImageName+':latest'
+def dockerNameCD = dockerRegistry +dockerImageName+':' + dockerCDTag
+def dockerNameLatest = dockerRegistry + dockerNameLocal
+
+
+
+task copyDockerAssets(type: Copy) {
+	dependsOn shadowJar
+	from(libsDir) {
+		include '*-all.jar'
+	}
+	into rootProject.file('docker/assets/')
+}
+
+task dockerBuild {
+	dependsOn copyDockerAssets
+	doLast {
+		exec {
+			workingDir 'docker'
+			commandLine 'docker', 'build', '-t', dockerNameLocal, '.'
+		}
+	}
+}
+
+task dockerTag {
+	dependsOn dockerBuild
+	doLast {
+		exec {
+			workingDir 'docker'
+			commandLine 'docker', 'tag', dockerNameLocal , dockerNameCD
+		}
+		exec {
+			workingDir 'docker'
+			commandLine 'docker', 'tag', dockerNameLocal , dockerNameLatest
+		}
+	}
+}
+
+task dockerPush {
+	dependsOn dockerTag
+	doLast {
+		exec {
+			workingDir 'docker'
+			commandLine 'docker', 'push', dockerRegistry + dockerImageName
+		}
+	}
+}
+

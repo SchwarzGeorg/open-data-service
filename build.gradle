@@ -192,6 +192,11 @@ def dockerServerNameLocal = dockerServerImageName+':latest'
 def dockerServerNameCD = dockerRegistry +dockerServerImageName+':' + dockerCDTag
 def dockerServerNameLatest = dockerRegistry + dockerServerNameLocal
 
+def dockerUserServiceImageName = 'osrg_ods_public/ods-cd'
+def dockerUserServiceNameLocal = dockerServerImageName+':latest'
+def dockerUserServiceNameCD = dockerRegistry +dockerServerImageName+':' + dockerCDTag
+def dockerUserServiceNameLatest = dockerRegistry + dockerServerNameLocal
+
 task dockerBuild {
     dependsOn ':server:copyDockerAssets'
     doLast {

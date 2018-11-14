@@ -176,7 +176,7 @@ subprojects {
 }
 
 /* make sure to include all projects that have a docker build!! */
-configure(subprojects.findAll {it.name == 'server'}) {
+configure(subprojects.findAll {it.name == 'server' || it.name == 'userservice'}) {
 
 	def dockerCDTag = new Date().format('yyyyMMdd-HHmm') + '.' + versionDetails().gitHash
 	def dockerRegistry = 'mojo-docker.cs.fau.de/'

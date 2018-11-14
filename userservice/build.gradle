@@ -34,6 +34,13 @@ dependencies {
 	compile "com.sun.xml.bind:jaxb-impl:$jaxbVersion"
 
 	compile "javax.activation:com.springsource.javax.activation:$javaxActivationVersion"
+	compile "org.ektorp:org.ektorp:$ektorpVersion"
+
+	compile "org.jvalue.commons:couchdb:$jvalueCommonsVersion"
+	compile "org.jvalue.commons:utils:$jvalueCommonsVersion"
+
+	compile 'com.google.api-client:google-api-client-java6:1.23.0'
+	compile 'com.google.api-client:google-api-client-jackson2:1.23.0'
 
     testCompile "org.jmockit:jmockit:$jmockitVersion"
     testCompile "junit:junit:$junitVersion"

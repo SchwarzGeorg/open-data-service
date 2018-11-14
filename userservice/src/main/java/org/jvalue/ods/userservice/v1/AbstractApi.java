@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.rest.v1;
+package org.jvalue.ods.userservice.v1;
 
 
 abstract class AbstractApi {

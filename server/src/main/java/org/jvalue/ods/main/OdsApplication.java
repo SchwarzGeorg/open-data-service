@@ -44,7 +44,6 @@ import org.jvalue.ods.rest.v1.PluginApi;
 import org.jvalue.ods.rest.v1.ProcessorChainApi;
 import org.jvalue.ods.rest.v1.ProcessorSpecificationApi;
 import org.jvalue.ods.auth.AuthModule;
-import org.jvalue.ods.userservice.rest.v1.UserApi;
 import org.jvalue.ods.rest.v1.VersionApi;
 import org.jvalue.ods.utils.GuiceConstraintValidatorFactory;
 
@@ -102,7 +101,6 @@ public final class OdsApplication extends Application<OdsConfig> {
 		environment.jersey().register(injector.getInstance(PluginApi.class));
 		environment.jersey().register(injector.getInstance(ProcessorSpecificationApi.class));
 		environment.jersey().register(injector.getInstance(VersionApi.class));
-		environment.jersey().register(injector.getInstance(UserApi.class));
 		environment.jersey().register(PropertyFilteringMessageBodyWriter.class);
 		environment.jersey().register(new DbExceptionMapper());
 		environment.jersey().register(new JsonExceptionMapper());

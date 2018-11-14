@@ -12,7 +12,11 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.hibernate.validator.HibernateValidator;
 import org.hibernate.validator.HibernateValidatorConfiguration;
 import org.hibernate.validator.cfg.ConstraintMapping;
+import org.jvalue.ods.userservice.auth.AuthBinder;
+import org.jvalue.ods.userservice.auth.AuthModule;
+import org.jvalue.ods.userservice.db.DbModule;
 import org.jvalue.ods.userservice.utils.GuiceConstraintValidatorFactory;
+import org.jvalue.ods.userservice.v1.UserApi;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -39,11 +43,15 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 	public void run(UserServiceConfig configuration, Environment environment) {
 
 		Injector injector = Guice.createInjector(
+				new DbModule(configuration.getCouchDb()),
+				new AuthModule(configuration.getAuth())
 				//TODO
 			);
 
 		// start data grabbing
 		// TODO
+		environment.jersey().getResourceConfig().register(injector.getInstance(AuthBinder.class));
+		environment.jersey().register(injector.getInstance(UserApi.class));
 
 		// setup users
 		// TODO

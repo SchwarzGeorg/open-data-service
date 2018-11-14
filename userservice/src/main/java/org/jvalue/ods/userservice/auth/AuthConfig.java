@@ -20,12 +20,6 @@ public class AuthConfig {
 	@NotNull private final String googleOAuthWebClientId;
 	@NotNull private final List<String> googleOAuthClientIds;
 
-	public AuthConfig() { //TODO: remove as soon as UserService was extracted
-		users = new ArrayList<BasicAuthUserDescription>();
-		googleOAuthClientIds = new ArrayList<String>();
-		googleOAuthWebClientId = "";
-	}
-
 	@JsonCreator
 	public AuthConfig(
 			@JsonProperty("users") List<BasicAuthUserDescription> users,

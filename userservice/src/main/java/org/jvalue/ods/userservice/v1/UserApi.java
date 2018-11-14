@@ -1,20 +1,16 @@
-package org.jvalue.ods.userservice.rest.v1;
+package org.jvalue.ods.userservice.v1;
 
 import com.google.common.base.Optional;
 import org.ektorp.DocumentNotFoundException;
-import org.jvalue.commons.auth.*;
-import org.jvalue.ods.userservice.auth.BasicAuthenticator;
+import org.jvalue.ods.userservice.auth.*;
 import org.jvalue.commons.rest.RestUtils;
-import org.jvalue.ods.userservice.auth.BasicAuthenticatorOriginal;
-
-import java.util.List;
+import org.jvalue.ods.userservice.models.*;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-//TODO: change imports to local ones after extraction of UserService
+import java.util.List;
 
 
 @Path(AbstractApi.VERSION + "/users")
@@ -23,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 public final class UserApi extends AbstractApi {
 
 	private final UserManager userManager;
-	private final BasicAuthenticatorOriginal basicAuthenticator;
+	private final BasicAuthenticator basicAuthenticator;
 	private final BasicAuthUtils basicAuthUtils;
 	private final OAuthUtils oAuthUtils;
 
@@ -32,7 +28,7 @@ public final class UserApi extends AbstractApi {
 	BasicAuthUtils authenticationUtils;
 
 	@Inject
-	public UserApi(UserManager userManager, BasicAuthenticatorOriginal basicAuthenticator, BasicAuthUtils basicAuthUtils, OAuthUtils oAuthUtils,
+	public UserApi(UserManager userManager, BasicAuthenticator basicAuthenticator, BasicAuthUtils basicAuthUtils, OAuthUtils oAuthUtils,
 				   BasicCredentialsRepository credentialsRepository, BasicAuthUtils authenticationUtils) {
 		this.userManager = userManager;
 		this.basicAuthenticator = basicAuthenticator;
@@ -134,7 +130,7 @@ public final class UserApi extends AbstractApi {
 	@PermitAll
 	public User authenticate(@PathParam("base64Code") String base64Code) {
 
-		BasicAuthenticatorOriginal authenticator = new BasicAuthenticatorOriginal(
+		BasicAuthenticator authenticator = new BasicAuthenticator(
 			userManager,
 			credentialsRepository,
 			authenticationUtils

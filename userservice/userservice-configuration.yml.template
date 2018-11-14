@@ -1,4 +1,6 @@
-gcmApiKey: GCM_API_KEY
+
+server:
+  applicationContextPath: /ods/userservice/api
 
 couchDb:
   url: http://localhost:5984/
@@ -7,9 +9,6 @@ couchDb:
   admin:
     username: ADMIN_USERNAME
     password: ADMIN_PASSWORD
-
-server:
-  applicationContextPath: /ods/api
 
 auth:
   users:

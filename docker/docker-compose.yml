@@ -1,7 +1,7 @@
 version: '3'
 services:
   ods:
-    image: mojo-docker.cs.fau.de/osrg_ods_public/ods-server:latest
+    image: mojo-docker.cs.fau.de/osrg_ods_public/ods-server-cd:latest
     ports:
       - "8080:8080"
       - "8081:8081"
@@ -14,7 +14,7 @@ services:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=admin
   userservice:
-    image: mojo-docker.cs.fau.de/osrg_ods_public/ods-userservice:latest
+    image: mojo-docker.cs.fau.de/osrg_ods_public/ods-userservice-cd:latest
     ports:
       - "8090:8080"
       - "8091:8081"

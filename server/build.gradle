@@ -24,6 +24,7 @@ repositories {
 
 dependencies {
     compile "org.glassfish.jersey.media:jersey-media-multipart:$jerseyVersion"
+	compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion"
     compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
     compile "io.dropwizard:dropwizard-jersey:$dropwizardVersion"
     compile "com.squareup.retrofit:retrofit:$retrofitVersion"
@@ -39,7 +40,6 @@ dependencies {
     compile "org.apache.commons:commons-csv:$apacheCommonsCsvVersion"
     compile "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonCoreVersion"
 	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonCoreVersion"
-	compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$jacksonCoreVersion"
 	compile "com.hubspot.jackson:jackson-jaxrs-propertyfiltering:$jacksonJaxrsVersion"
     compile "org.jvalue.commons:couchdb:$jvalueCommonsVersion"
     compile "org.jvalue.commons:auth:$jvalueCommonsVersion"

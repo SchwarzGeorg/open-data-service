@@ -3,7 +3,6 @@ package org.jvalue.ods.auth;
 import com.google.common.base.Optional;
 import org.jvalue.commons.auth.Authenticator;
 import org.jvalue.commons.auth.User;
-import org.jvalue.commons.utils.Log;
 
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
@@ -13,14 +12,14 @@ import javax.ws.rs.core.MediaType;
 public class RemoteAuthenticator implements Authenticator {
 
 	// TODO: get this from service discovery
-	public final String USER_SERVICE_PATH;
+	public final String userServicePath;
 	public static final String USER_SERVICE_AUTH_HEADER = "Authorization";
 
 	@Inject
 	public RemoteAuthenticator(
 		AuthConfig authConfig
 	) {
-		USER_SERVICE_PATH = authConfig.getUserServiceUrl();
+		userServicePath = authConfig.getUserServiceUrl();
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class RemoteAuthenticator implements Authenticator {
 
 		return Optional.of(
 			client
-				.target(USER_SERVICE_PATH + "/users/authenticate/" + token)
+				.target(userServicePath + "/users/authenticate/" + token)
 				// TODO: as soon as UserService is extracted, change to me endpoint
 				.request(MediaType.APPLICATION_JSON)
 				// TODO: and pass via header:

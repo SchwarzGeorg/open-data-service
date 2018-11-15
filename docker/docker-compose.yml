@@ -13,6 +13,10 @@ services:
       - COUCHDB_URL=http://couchdb:5984/
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=admin
+      - USER_SERVICE_URL=http://userservice:8090/ods/userservice/api/v1
+    networks:
+      - backend
+
   userservice:
     image: mojo-docker.cs.fau.de/osrg_ods_public/ods-userservice-cd:latest
     ports:
@@ -26,6 +30,9 @@ services:
       - COUCHDB_URL=http://couchdb:5984/
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=admin
+    networks:
+      - backend
+
   couchdb:
     image: couchdb
     ports:
@@ -33,3 +40,9 @@ services:
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=admin
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"

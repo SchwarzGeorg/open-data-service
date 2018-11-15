@@ -13,4 +13,4 @@ server:
   applicationContextPath: ODS_CONTEXT_PATH/api
 
 auth:
-  userServiceUrl: USERSERVICE_URL
+  userServiceUrl: USER_SERVICE_URL

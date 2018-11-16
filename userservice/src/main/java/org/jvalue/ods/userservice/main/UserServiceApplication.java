@@ -53,11 +53,9 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		Injector injector = Guice.createInjector(
 				new DbModule(configuration.getCouchDb()),
 				new AuthModule(configuration.getAuth())
-				//TODO
 			);
 
 		// start data grabbing
-		// TODO
 		environment.jersey().getResourceConfig().register(injector.getInstance(AuthBinder.class));
 		environment.jersey().register(injector.getInstance(UserApi.class));
 
@@ -83,11 +81,6 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		corsFilter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "OPTIONS,GET,PUT,POST,DELETE,HEAD");
 		corsFilter.setInitParameter(CrossOriginFilter.ALLOW_CREDENTIALS_PARAM, "true");
 		corsFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-
-		// configure administration
-		DropwizardResourceConfig jerseyConfig = new DropwizardResourceConfig(environment.metrics());
-		JerseyContainerHolder jerseyContainerHolder = new JerseyContainerHolder(new ServletContainer(jerseyConfig));
-		//TODO
 
 		// setup validation for external classes
 		HibernateValidatorConfiguration validatorContext = Validation.byProvider(HibernateValidator.class).configure();

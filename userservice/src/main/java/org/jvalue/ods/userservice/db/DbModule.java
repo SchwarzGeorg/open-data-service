@@ -3,7 +3,6 @@ package org.jvalue.ods.userservice.db;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import jdk.incubator.http.internal.common.Log;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.StdHttpClient;

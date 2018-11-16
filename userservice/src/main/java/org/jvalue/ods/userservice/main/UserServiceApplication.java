@@ -19,6 +19,7 @@ import org.jvalue.ods.userservice.auth.AuthBinder;
 import org.jvalue.ods.userservice.auth.AuthModule;
 import org.jvalue.ods.userservice.auth.UnauthorizedExceptionMapper;
 import org.jvalue.ods.userservice.auth.UserManager;
+import org.jvalue.ods.userservice.db.DbHealthCheck;
 import org.jvalue.ods.userservice.db.DbModule;
 import org.jvalue.ods.userservice.models.BasicAuthUserDescription;
 import org.jvalue.ods.userservice.utils.GuiceConstraintValidatorFactory;
@@ -69,7 +70,8 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		setupDefaultUsers(injector.getInstance(UserManager.class), configuration.getAuth().getUsers());
 
 		// setup health checks
-		// TODO
+		environment.healthChecks().register(DbHealthCheck.class.getSimpleName(), injector.getInstance(DbHealthCheck.class));
+
 
 		// setup Cross-Origin Resource Sharing (CORS)
 		final FilterRegistration.Dynamic corsFilter =

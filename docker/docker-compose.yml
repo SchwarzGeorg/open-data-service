@@ -27,7 +27,7 @@ services:
       - ODS_ADMIN_CONTEXT_PATH=/
       - ODS_CONTEXT_PATH=/ods/userservice
       - ODS_ADMIN_PASSWORD=admin123
-      - COUCHDB_URL=http://couchdb:5984/
+      - COUCHDB_URL=http://usercouchdb:5984/
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=admin
     networks:
@@ -42,6 +42,16 @@ services:
       - COUCHDB_PASSWORD=admin
     networks:
       - backend
+
+  usercouchdb:
+    image: couchdb
+    ports:
+    - "5994:5984"
+    environment:
+    - COUCHDB_USER=admin
+    - COUCHDB_PASSWORD=admin
+    networks:
+    - backend
 
 networks:
   backend:

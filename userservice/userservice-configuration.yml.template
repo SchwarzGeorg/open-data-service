@@ -3,7 +3,7 @@ server:
   applicationContextPath: /ods/userservice/api
 
 couchDb:
-  url: http://localhost:5984/
+  url: http://localhost:5994/
   dbPrefix: ods
   maxConnections: 100
   admin:

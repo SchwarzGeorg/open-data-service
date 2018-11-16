@@ -12,8 +12,12 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.hibernate.validator.HibernateValidator;
 import org.hibernate.validator.HibernateValidatorConfiguration;
 import org.hibernate.validator.cfg.ConstraintMapping;
+import org.jvalue.commons.couchdb.rest.DbExceptionMapper;
+import org.jvalue.commons.rest.JsonExceptionMapper;
+import org.jvalue.commons.rest.NotFoundExceptionMapper;
 import org.jvalue.ods.userservice.auth.AuthBinder;
 import org.jvalue.ods.userservice.auth.AuthModule;
+import org.jvalue.ods.userservice.auth.UnauthorizedExceptionMapper;
 import org.jvalue.ods.userservice.db.DbModule;
 import org.jvalue.ods.userservice.utils.GuiceConstraintValidatorFactory;
 import org.jvalue.ods.userservice.v1.UserApi;
@@ -52,6 +56,11 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		// TODO
 		environment.jersey().getResourceConfig().register(injector.getInstance(AuthBinder.class));
 		environment.jersey().register(injector.getInstance(UserApi.class));
+
+		environment.jersey().register(new DbExceptionMapper());
+		environment.jersey().register(new JsonExceptionMapper());
+		environment.jersey().register(new UnauthorizedExceptionMapper());
+		environment.jersey().register(new NotFoundExceptionMapper());
 
 		// setup users
 		// TODO

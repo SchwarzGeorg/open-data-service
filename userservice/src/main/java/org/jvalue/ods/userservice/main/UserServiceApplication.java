@@ -18,7 +18,9 @@ import org.jvalue.commons.rest.NotFoundExceptionMapper;
 import org.jvalue.ods.userservice.auth.AuthBinder;
 import org.jvalue.ods.userservice.auth.AuthModule;
 import org.jvalue.ods.userservice.auth.UnauthorizedExceptionMapper;
+import org.jvalue.ods.userservice.auth.UserManager;
 import org.jvalue.ods.userservice.db.DbModule;
+import org.jvalue.ods.userservice.models.BasicAuthUserDescription;
 import org.jvalue.ods.userservice.utils.GuiceConstraintValidatorFactory;
 import org.jvalue.ods.userservice.v1.UserApi;
 
@@ -27,6 +29,7 @@ import javax.servlet.FilterRegistration;
 import javax.validation.Validation;
 import javax.ws.rs.core.Context;
 import java.util.EnumSet;
+import java.util.List;
 
 public final class UserServiceApplication extends Application<UserServiceConfig> {
 
@@ -63,7 +66,7 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		environment.jersey().register(new NotFoundExceptionMapper());
 
 		// setup users
-		// TODO
+		setupDefaultUsers(injector.getInstance(UserManager.class), configuration.getAuth().getUsers());
 
 		// setup health checks
 		// TODO
@@ -94,5 +97,11 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 				.constraintValidatorFactory(new GuiceConstraintValidatorFactory(injector))
 				.buildValidatorFactory()
 				.getValidator());
+	}
+
+	private void setupDefaultUsers(UserManager userManager, List<BasicAuthUserDescription> userList) {
+		for (BasicAuthUserDescription user : userList) {
+			if (!userManager.contains(user.getEmail())) userManager.add(user);
+		}
 	}
 }

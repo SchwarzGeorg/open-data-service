@@ -136,7 +136,7 @@ public final class UserApi extends AbstractApi {
 			authenticationUtils
 		);
 		Optional<User> user = authenticator.authenticate("Basic " + base64Code);
-		if(user == null) throw new org.jvalue.ods.userservice.auth.UnauthorizedException("You are not authorized!");
+		if(!user.isPresent()) throw new org.jvalue.ods.userservice.auth.UnauthorizedException("You are not authorized!");
 		return user.get();
 	}
 }

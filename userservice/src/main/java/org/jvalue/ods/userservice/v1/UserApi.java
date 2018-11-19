@@ -23,19 +23,13 @@ public final class UserApi extends AbstractApi {
 	private final BasicAuthUtils basicAuthUtils;
 	private final OAuthUtils oAuthUtils;
 
-	//TODO: remove after extraction of UserService
-	BasicCredentialsRepository credentialsRepository;
-	BasicAuthUtils authenticationUtils;
 
 	@Inject
-	public UserApi(UserManager userManager, BasicAuthenticator basicAuthenticator, BasicAuthUtils basicAuthUtils, OAuthUtils oAuthUtils,
-				   BasicCredentialsRepository credentialsRepository, BasicAuthUtils authenticationUtils) {
+	public UserApi(UserManager userManager, BasicAuthenticator basicAuthenticator, BasicAuthUtils basicAuthUtils, OAuthUtils oAuthUtils) {
 		this.userManager = userManager;
 		this.basicAuthenticator = basicAuthenticator;
 		this.basicAuthUtils = basicAuthUtils;
 		this.oAuthUtils = oAuthUtils;
-		this.credentialsRepository = credentialsRepository;
-		this.authenticationUtils = authenticationUtils;
 	}
 
 	@GET
@@ -121,23 +115,6 @@ public final class UserApi extends AbstractApi {
 		} catch (DocumentNotFoundException dnfe) {
 			return Optional.absent();
 		}
-	}
-
-	// TODO: remove after extracted UserService
-	// only exists in order to test the new RemoteAuthenticator
-	@GET
-	@Path("authenticate/{base64Code}")
-	@PermitAll
-	public User authenticate(@PathParam("base64Code") String base64Code) {
-
-		BasicAuthenticator authenticator = new BasicAuthenticator(
-			userManager,
-			credentialsRepository,
-			authenticationUtils
-		);
-		Optional<User> user = authenticator.authenticate("Basic " + base64Code);
-		if(!user.isPresent()) throw new org.jvalue.ods.userservice.auth.UnauthorizedException("You are not authorized!");
-		return user.get();
 	}
 }
 

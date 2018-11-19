@@ -7,13 +7,13 @@ import org.jvalue.commons.auth.User;
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 public class RemoteAuthenticator implements Authenticator {
 
 	// TODO: get this from service discovery
 	public final String userServicePath;
-	public static final String USER_SERVICE_AUTH_HEADER = "Authorization";
 
 	@Inject
 	public RemoteAuthenticator(
@@ -41,11 +41,9 @@ public class RemoteAuthenticator implements Authenticator {
 
 		return Optional.of(
 			client
-				.target(userServicePath + "/users/authenticate/" + token)
-				// TODO: as soon as UserService is extracted, change to me endpoint
+				.target(userServicePath + "/users/me")
 				.request(MediaType.APPLICATION_JSON)
-				// TODO: and pass via header:
-				//.header(USER_SERVICE_AUTH_HEADER, authHeader)
+				.header(HttpHeaders.AUTHORIZATION, authHeader)
 				.get(User.class)
 		);
 	}

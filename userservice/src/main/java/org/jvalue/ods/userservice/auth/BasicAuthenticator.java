@@ -20,9 +20,8 @@ public final class BasicAuthenticator implements Authenticator {
 	private final BasicCredentialsRepository credentialsRepository;
 	private final BasicAuthUtils authenticationUtils;
 
-	// TODO: remove public modifier as soon extraction of UserService is completed
 	@Inject
-	public BasicAuthenticator(
+	BasicAuthenticator(
 			UserManager userManager,
 			BasicCredentialsRepository credentialsRepository,
 			BasicAuthUtils authenticationUtils) {

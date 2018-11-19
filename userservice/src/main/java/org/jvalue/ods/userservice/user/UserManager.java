@@ -8,8 +8,8 @@ import org.jvalue.ods.userservice.auth.util.BasicAuthUtils;
 import org.jvalue.ods.userservice.auth.credentials.BasicCredentials;
 import org.jvalue.ods.userservice.auth.credentials.BasicCredentialsRepository;
 import org.jvalue.ods.userservice.auth.util.OAuthUtils;
-import org.jvalue.ods.userservice.models.BasicAuthUserDescription;
-import org.jvalue.ods.userservice.models.OAuthUserDescription;
+import org.jvalue.ods.userservice.v1.models.BasicAuthUserDescription;
+import org.jvalue.ods.userservice.v1.models.OAuthUserDescription;
 
 import java.util.List;
 import java.util.UUID;

@@ -3,7 +3,7 @@ package org.jvalue.ods.userservice.auth.config;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.jvalue.ods.userservice.models.BasicAuthUserDescription;
+import org.jvalue.ods.userservice.v1.models.BasicAuthUserDescription;
 
 import java.util.List;
 

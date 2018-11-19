@@ -18,7 +18,7 @@ import org.jvalue.ods.userservice.auth.exception.UnauthorizedExceptionMapper;
 import org.jvalue.ods.userservice.user.UserManager;
 import org.jvalue.ods.userservice.db.DbHealthCheck;
 import org.jvalue.ods.userservice.db.DbModule;
-import org.jvalue.ods.userservice.models.BasicAuthUserDescription;
+import org.jvalue.ods.userservice.v1.models.BasicAuthUserDescription;
 import org.jvalue.ods.userservice.utils.GuiceConstraintValidatorFactory;
 import org.jvalue.ods.userservice.v1.UserApi;
 

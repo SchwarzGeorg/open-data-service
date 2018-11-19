@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.models;
+package org.jvalue.ods.userservice.v1.models;
 
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;

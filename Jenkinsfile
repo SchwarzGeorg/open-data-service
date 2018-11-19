@@ -42,7 +42,8 @@ pipeline {
             steps {
                 parallel(
 					'Run ODS Container': {
-						sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up -d"
+						sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up >integration-test.log"
+						archive 'integration-test.log'
 					},
 					'Run Integration Tests': {
 						sh "./gradlew integrationTest"

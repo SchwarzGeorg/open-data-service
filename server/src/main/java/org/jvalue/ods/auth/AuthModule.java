@@ -14,6 +14,7 @@ public final class AuthModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		bind(AuthConfig.class).toInstance(authConfig);
+		bind(RemoteAuthenticationClient.class).toInstance(new UserServiceAuthenticationClient(authConfig));
 	}
 
 }

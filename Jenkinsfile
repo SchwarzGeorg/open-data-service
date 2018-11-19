@@ -63,10 +63,10 @@ pipeline {
         always {
 			junit '*/build/test-results/**/*.xml'
 
-			sh "docker-compose logs -f docker/docker-compose.yml -f docker/docker-compose.local.yml ods > integration-test-ods.log"
+			sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml logs ods > integration-test-ods.log"
 			archive 'integration-test-ods.log'
 
-			sh "docker-compose logs -f docker/docker-compose.yml -f docker/docker-compose.local.yml couchdb > integration-test-couchdb.log"
+			sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml logs couchdb > integration-test-couchdb.log"
 			archive 'integration-test-couchdb.log'
 
 			sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml stop"

@@ -42,11 +42,14 @@ pipeline {
             steps {
                 parallel(
 					'Run ODS Container': {
-						sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up -d > integration-test.log"
+						sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up > integration-test.log"
 						archive 'integration-test.log'
 					},
 					'Run Integration Tests': {
 						sh "./gradlew integrationTest"
+						always {
+							sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml stop"
+						}
 					}
                 )
             }
@@ -63,7 +66,6 @@ pipeline {
     post {
         always {
             junit '*/build/test-results/**/*.xml'
-            sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml stop"
             deleteDir()
         }
     }

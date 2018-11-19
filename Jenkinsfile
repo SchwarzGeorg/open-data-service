@@ -61,9 +61,13 @@ pipeline {
 
     post {
         always {
-            junit '*/build/test-results/**/*.xml'
-            sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml stop"
-            deleteDir()
+			junit '*/build/test-results/**/*.xml'
+
+			sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml logs ods > integration-test-ods.log"
+			archive 'integration-test-ods.log'
+
+			sh "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml stop"
+			deleteDir()
         }
     }
 }

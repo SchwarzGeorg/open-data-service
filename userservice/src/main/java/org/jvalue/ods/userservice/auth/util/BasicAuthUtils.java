@@ -1,7 +1,8 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.util;
 
 
 import org.jvalue.commons.utils.Log;
+import org.jvalue.ods.userservice.auth.credentials.BasicCredentials;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.exception;
 
 
 /**

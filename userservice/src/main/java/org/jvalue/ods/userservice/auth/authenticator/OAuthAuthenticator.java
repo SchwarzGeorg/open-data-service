@@ -1,8 +1,10 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.authenticator;
 
 
 import com.google.common.base.Optional;
-import org.jvalue.ods.userservice.models.User;
+import org.jvalue.ods.userservice.auth.util.OAuthUtils;
+import org.jvalue.ods.userservice.user.User;
+import org.jvalue.ods.userservice.user.UserManager;
 
 import javax.inject.Inject;
 

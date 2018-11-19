@@ -4,6 +4,7 @@ package org.jvalue.ods.userservice.models;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
+import org.jvalue.ods.userservice.user.Role;
 
 /**
  * A user which can be registered for oauth.

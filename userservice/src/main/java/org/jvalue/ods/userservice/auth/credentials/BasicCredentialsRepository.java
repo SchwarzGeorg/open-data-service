@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.credentials;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -11,6 +11,7 @@ import org.ektorp.support.View;
 import org.jvalue.commons.couchdb.DbDocument;
 import org.jvalue.commons.couchdb.DbDocumentAdaptable;
 import org.jvalue.commons.couchdb.RepositoryAdapter;
+import org.jvalue.ods.userservice.user.UserRepository;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import javax.inject.Named;
 public final class BasicCredentialsRepository extends RepositoryAdapter<
 		BasicCredentialsRepository.CredentialsCouchDbRepository,
 		BasicCredentialsRepository.CredentialsDocument,
-	org.jvalue.ods.userservice.auth.BasicCredentials> {
+	BasicCredentials> {
 
 	private static final String DOCUMENT_ID = "doc.value.userId != null && doc.value.salt != null";
 

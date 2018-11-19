@@ -1,11 +1,15 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.authenticator;
 
 
 import com.google.common.base.Optional;
 import com.google.common.io.BaseEncoding;
 
 import org.ektorp.DocumentNotFoundException;
-import org.jvalue.ods.userservice.models.User;
+import org.jvalue.ods.userservice.auth.util.BasicAuthUtils;
+import org.jvalue.ods.userservice.auth.credentials.BasicCredentials;
+import org.jvalue.ods.userservice.auth.credentials.BasicCredentialsRepository;
+import org.jvalue.ods.userservice.user.User;
+import org.jvalue.ods.userservice.user.UserManager;
 
 import java.nio.charset.StandardCharsets;
 

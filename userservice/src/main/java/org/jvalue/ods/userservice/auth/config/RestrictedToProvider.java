@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.config;
 
 
 import com.google.common.base.Optional;
@@ -9,9 +9,13 @@ import org.glassfish.jersey.server.internal.inject.AbstractContainerRequestValue
 import org.glassfish.jersey.server.internal.inject.AbstractValueFactoryProvider;
 import org.glassfish.jersey.server.internal.inject.MultivaluedParameterExtractorProvider;
 import org.glassfish.jersey.server.model.Parameter;
-import org.jvalue.ods.userservice.models.RestrictedTo;
-import org.jvalue.ods.userservice.models.Role;
-import org.jvalue.ods.userservice.models.User;
+import org.jvalue.ods.userservice.auth.RestrictedTo;
+import org.jvalue.ods.userservice.auth.exception.UnauthorizedException;
+import org.jvalue.ods.userservice.auth.authenticator.Authenticator;
+import org.jvalue.ods.userservice.auth.authenticator.BasicAuthenticator;
+import org.jvalue.ods.userservice.auth.authenticator.OAuthAuthenticator;
+import org.jvalue.ods.userservice.user.Role;
+import org.jvalue.ods.userservice.user.User;
 
 import java.util.List;
 

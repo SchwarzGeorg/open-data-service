@@ -4,6 +4,7 @@ package org.jvalue.ods.userservice.models;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.base.Objects;
+import org.jvalue.ods.userservice.user.Role;
 
 import javax.validation.constraints.NotNull;
 

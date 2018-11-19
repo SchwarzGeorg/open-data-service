@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.user;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -11,7 +11,6 @@ import org.ektorp.support.View;
 import org.jvalue.commons.couchdb.DbDocument;
 import org.jvalue.commons.couchdb.DbDocumentAdaptable;
 import org.jvalue.commons.couchdb.RepositoryAdapter;
-import org.jvalue.ods.userservice.models.User;
 
 import java.util.List;
 

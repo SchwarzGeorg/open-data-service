@@ -1,5 +1,7 @@
-package org.jvalue.ods.userservice.models;
+package org.jvalue.ods.userservice.auth;
 
+
+import org.jvalue.ods.userservice.user.Role;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

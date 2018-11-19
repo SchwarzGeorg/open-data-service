@@ -1,11 +1,10 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.config;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jvalue.ods.userservice.models.BasicAuthUserDescription;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;

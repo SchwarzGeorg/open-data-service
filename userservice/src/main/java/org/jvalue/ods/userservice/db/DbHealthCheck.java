@@ -3,7 +3,7 @@ package org.jvalue.ods.userservice.db;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.google.inject.Inject;
-import org.jvalue.ods.userservice.auth.UserRepository;
+import org.jvalue.ods.userservice.user.UserRepository;
 
 /**
  * Checks that CouchDb is reachable.

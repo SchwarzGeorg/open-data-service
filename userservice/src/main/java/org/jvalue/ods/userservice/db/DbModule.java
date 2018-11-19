@@ -9,7 +9,7 @@ import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbInstance;
 import org.jvalue.commons.couchdb.CouchDbConfig;
 import org.jvalue.commons.couchdb.DbConnectorFactory;
-import org.jvalue.ods.userservice.auth.UserRepository;
+import org.jvalue.ods.userservice.user.UserRepository;
 
 import java.net.MalformedURLException;
 

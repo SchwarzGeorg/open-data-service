@@ -1,6 +1,7 @@
 package org.jvalue.ods.userservice.auth;
 
 import com.google.inject.AbstractModule;
+import org.jvalue.ods.userservice.auth.config.AuthConfig;
 
 ;
 

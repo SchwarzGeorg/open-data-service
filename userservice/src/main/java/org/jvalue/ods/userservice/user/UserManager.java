@@ -1,12 +1,15 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.user;
 
 
 import org.ektorp.DocumentNotFoundException;
 import org.jvalue.commons.utils.Assert;
 import org.jvalue.commons.utils.Log;
+import org.jvalue.ods.userservice.auth.util.BasicAuthUtils;
+import org.jvalue.ods.userservice.auth.credentials.BasicCredentials;
+import org.jvalue.ods.userservice.auth.credentials.BasicCredentialsRepository;
+import org.jvalue.ods.userservice.auth.util.OAuthUtils;
 import org.jvalue.ods.userservice.models.BasicAuthUserDescription;
 import org.jvalue.ods.userservice.models.OAuthUserDescription;
-import org.jvalue.ods.userservice.models.User;
 
 import java.util.List;
 import java.util.UUID;

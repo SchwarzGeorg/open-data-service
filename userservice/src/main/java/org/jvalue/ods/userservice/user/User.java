@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.models;
+package org.jvalue.ods.userservice.user;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;

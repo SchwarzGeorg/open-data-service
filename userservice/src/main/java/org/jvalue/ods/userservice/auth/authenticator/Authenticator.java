@@ -1,8 +1,8 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.authenticator;
 
 
 import com.google.common.base.Optional;
-import org.jvalue.ods.userservice.models.User;
+import org.jvalue.ods.userservice.user.User;
 
 /**
  * Tries to match {@link User} objects to credentials.

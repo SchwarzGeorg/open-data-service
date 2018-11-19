@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.models;
+package org.jvalue.ods.userservice.user;
 
 import java.util.EnumSet;
 

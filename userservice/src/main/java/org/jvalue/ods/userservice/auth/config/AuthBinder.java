@@ -1,11 +1,13 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.config;
 
 
 import org.glassfish.hk2.api.InjectionResolver;
 import org.glassfish.hk2.api.TypeLiteral;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.spi.internal.ValueFactoryProvider;
-import org.jvalue.ods.userservice.models.RestrictedTo;
+import org.jvalue.ods.userservice.auth.RestrictedTo;
+import org.jvalue.ods.userservice.auth.authenticator.BasicAuthenticator;
+import org.jvalue.ods.userservice.auth.authenticator.OAuthAuthenticator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

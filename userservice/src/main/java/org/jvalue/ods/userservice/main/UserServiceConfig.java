@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import org.jvalue.commons.couchdb.CouchDbConfig;
-import org.jvalue.ods.userservice.auth.AuthConfig;
+import org.jvalue.ods.userservice.auth.config.AuthConfig;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

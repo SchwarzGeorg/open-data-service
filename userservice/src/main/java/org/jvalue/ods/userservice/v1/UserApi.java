@@ -4,9 +4,15 @@ import com.google.common.base.Optional;
 import org.ektorp.DocumentNotFoundException;
 import org.jvalue.ods.userservice.auth.*;
 import org.jvalue.commons.rest.RestUtils;
+import org.jvalue.ods.userservice.auth.authenticator.BasicAuthenticator;
+import org.jvalue.ods.userservice.auth.exception.UnauthorizedException;
+import org.jvalue.ods.userservice.auth.util.BasicAuthUtils;
+import org.jvalue.ods.userservice.auth.util.OAuthUtils;
 import org.jvalue.ods.userservice.models.*;
+import org.jvalue.ods.userservice.user.Role;
+import org.jvalue.ods.userservice.user.User;
+import org.jvalue.ods.userservice.user.UserManager;
 
-import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

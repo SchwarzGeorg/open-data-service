@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.auth;
+package org.jvalue.ods.userservice.auth.util;
 
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
@@ -9,6 +9,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.common.base.Optional;
 
 import org.jvalue.commons.utils.Log;
+import org.jvalue.ods.userservice.auth.config.AuthConfig;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

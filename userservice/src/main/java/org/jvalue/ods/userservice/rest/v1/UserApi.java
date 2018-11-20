@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.v1;
+package org.jvalue.ods.userservice.rest.v1;
 
 import com.google.common.base.Optional;
 import org.ektorp.DocumentNotFoundException;
@@ -8,7 +8,7 @@ import org.jvalue.ods.userservice.auth.authenticator.BasicAuthenticator;
 import org.jvalue.ods.userservice.auth.exception.UnauthorizedException;
 import org.jvalue.ods.userservice.auth.util.BasicAuthUtils;
 import org.jvalue.ods.userservice.auth.util.OAuthUtils;
-import org.jvalue.ods.userservice.v1.models.*;
+import org.jvalue.ods.userservice.rest.v1.models.*;
 import org.jvalue.ods.userservice.user.Role;
 import org.jvalue.ods.userservice.user.User;
 import org.jvalue.ods.userservice.user.UserManager;

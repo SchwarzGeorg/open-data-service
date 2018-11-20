@@ -1,5 +1,4 @@
 import de.bitdroid.jaxrs2retrofit.converter.IgnoreConverter
-import org.jvalue.commons.auth.RestrictedTo
 import com.squareup.javapoet.ClassName
 
 apply plugin: 'de.bitdroid.jaxrs2retrofit'
@@ -15,7 +14,6 @@ buildscript {
     }
     dependencies {
         classpath "de.bitdroid.jaxrs2retrofit:plugin:$jaxrs2retrofitVersion"
-        classpath "org.jvalue.commons:auth:$jvalueCommonsVersion"
     }
 }
 
@@ -25,6 +23,7 @@ dependencies {
     compile "io.reactivex:rxjava:$rxjavaVersion"
     compile "org.jvalue.commons:models:$jvalueCommonsVersion"
     compile project(':models')
+    compile project(':server')
 
     testCompile "org.jmockit:jmockit:$jmockitVersion"
     testCompile "junit:junit:$junitVersion"
@@ -36,5 +35,5 @@ jaxRs2Retrofit {
 	outputDir = file(generatedSourcesDir)
     packageName = 'org.jvalue.ods.api'
     excludedClassNamesRegex = 'PluginApi|FilterDescriptionApi|Admin.*'
-    paramConverterManager.registerConverter(ClassName.get(RestrictedTo.class), new IgnoreConverter())
+    paramConverterManager.registerConverter(new ClassName(['org.jvalue.ods.auth.RestrictedTo']), new IgnoreConverter())
 }

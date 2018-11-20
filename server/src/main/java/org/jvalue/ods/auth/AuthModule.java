@@ -1,7 +1,10 @@
 package org.jvalue.ods.auth;
 
 import com.google.inject.AbstractModule;
-import org.jvalue.commons.auth.User;
+import org.jvalue.ods.auth.authenticator.AuthCacheProvider;
+import org.jvalue.ods.auth.authenticator.RemoteAuthenticationClient;
+import org.jvalue.ods.auth.authenticator.UserServiceAuthenticationClient;
+import org.jvalue.ods.auth.config.AuthConfig;
 
 import javax.cache.Cache;
 import javax.cache.CacheManager;

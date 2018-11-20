@@ -6,12 +6,12 @@ import com.google.inject.Inject;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.jvalue.commons.auth.RestrictedTo;
-import org.jvalue.commons.auth.Role;
-import org.jvalue.commons.auth.User;
 import org.jvalue.commons.rest.RestUtils;
 import org.jvalue.ods.api.processors.PluginMetaData;
 import org.jvalue.ods.api.sources.DataSource;
+import org.jvalue.ods.auth.RestrictedTo;
+import org.jvalue.ods.auth.Role;
+import org.jvalue.ods.auth.User;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.processor.plugin.PluginMetaDataManager;
 

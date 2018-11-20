@@ -1,4 +1,4 @@
-package org.jvalue.ods.auth;
+package org.jvalue.ods.auth.authenticator;
 
 import javax.cache.Cache;
 

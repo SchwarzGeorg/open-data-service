@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import io.dropwizard.Configuration;
-import org.jvalue.ods.auth.AuthConfig;
+import org.jvalue.ods.auth.config.AuthConfig;
 
 
 public final class OdsConfig extends Configuration {

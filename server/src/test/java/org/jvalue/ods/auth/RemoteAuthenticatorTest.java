@@ -7,8 +7,9 @@ import mockit.Verifications;
 import mockit.integration.junit4.JMockit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.jvalue.commons.auth.Role;
-import org.jvalue.commons.auth.User;
+import org.jvalue.ods.auth.authenticator.AuthCacheProvider;
+import org.jvalue.ods.auth.authenticator.RemoteAuthenticationClient;
+import org.jvalue.ods.auth.authenticator.RemoteAuthenticator;
 
 
 import javax.cache.Cache;

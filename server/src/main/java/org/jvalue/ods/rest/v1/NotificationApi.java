@@ -3,9 +3,6 @@ package org.jvalue.ods.rest.v1;
 
 import com.google.inject.Inject;
 
-import org.jvalue.commons.auth.RestrictedTo;
-import org.jvalue.commons.auth.Role;
-import org.jvalue.commons.auth.User;
 import org.jvalue.commons.rest.RestUtils;
 import org.jvalue.ods.api.notifications.AmqpClient;
 import org.jvalue.ods.api.notifications.AmqpClientDescription;
@@ -19,6 +16,9 @@ import org.jvalue.ods.api.notifications.HttpClientDescription;
 import org.jvalue.ods.api.notifications.NdsClient;
 import org.jvalue.ods.api.notifications.NdsClientDescription;
 import org.jvalue.ods.api.sources.DataSource;
+import org.jvalue.ods.auth.RestrictedTo;
+import org.jvalue.ods.auth.Role;
+import org.jvalue.ods.auth.User;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.notifications.NotificationManager;
 

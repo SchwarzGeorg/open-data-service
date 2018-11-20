@@ -3,13 +3,13 @@ package org.jvalue.ods.rest.v1;
 
 import com.google.inject.Inject;
 
-import org.jvalue.commons.auth.RestrictedTo;
-import org.jvalue.commons.auth.Role;
-import org.jvalue.commons.auth.User;
 import org.jvalue.commons.rest.RestUtils;
 import org.jvalue.ods.api.processors.ProcessorReferenceChain;
 import org.jvalue.ods.api.processors.ProcessorReferenceChainDescription;
 import org.jvalue.ods.api.sources.DataSource;
+import org.jvalue.ods.auth.RestrictedTo;
+import org.jvalue.ods.auth.Role;
+import org.jvalue.ods.auth.User;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.processor.ProcessorChainManager;
 
@@ -32,15 +32,15 @@ public final class ProcessorChainApi extends AbstractApi {
 
 	// avoid executing filter chains faster than every second
 	private static final EnumSet<TimeUnit> validExecutionIntervalUnits
-			= EnumSet.of(TimeUnit.SECONDS, TimeUnit.MINUTES, TimeUnit.HOURS, TimeUnit.DAYS);
+		= EnumSet.of(TimeUnit.SECONDS, TimeUnit.MINUTES, TimeUnit.HOURS, TimeUnit.DAYS);
 
 	private final DataSourceManager sourceManager;
 	private final ProcessorChainManager chainManager;
 
 	@Inject
 	public ProcessorChainApi(
-			DataSourceManager sourceManager,
-			ProcessorChainManager chainManager) {
+		DataSourceManager sourceManager,
+		ProcessorChainManager chainManager) {
 
 		this.sourceManager = sourceManager;
 		this.chainManager = chainManager;
@@ -49,7 +49,7 @@ public final class ProcessorChainApi extends AbstractApi {
 
 	@GET
 	public List<ProcessorReferenceChain> getAllProcessorChains(
-			@PathParam("sourceId") String sourceId) {
+		@PathParam("sourceId") String sourceId) {
 		DataSource source = sourceManager.findBySourceId(sourceId);
 		return chainManager.getAll(source);
 	}
@@ -58,8 +58,8 @@ public final class ProcessorChainApi extends AbstractApi {
 	@GET
 	@Path("/{filterChainId}")
 	public ProcessorReferenceChain getProcessorChain(
-			@PathParam("sourceId") String sourceId,
-			@PathParam("filterChainId") String filterChainId) {
+		@PathParam("sourceId") String sourceId,
+		@PathParam("filterChainId") String filterChainId) {
 
 		DataSource source = sourceManager.findBySourceId(sourceId);
 		return chainManager.get(source, filterChainId);
@@ -69,10 +69,10 @@ public final class ProcessorChainApi extends AbstractApi {
 	@PUT
 	@Path("/{filterChainId}")
 	public ProcessorReferenceChain addProcessorChain(
-			@RestrictedTo(Role.ADMIN) User user,
-			@PathParam("sourceId") String sourceId,
-			@PathParam("filterChainId") String filterChainId,
-			@Valid ProcessorReferenceChainDescription processorChain) {
+		@RestrictedTo(Role.ADMIN) User user,
+		@PathParam("sourceId") String sourceId,
+		@PathParam("filterChainId") String filterChainId,
+		@Valid ProcessorReferenceChainDescription processorChain) {
 
 		if (processorChain.getExecutionInterval() != null) {
 			assertIsValidTimeUnit(processorChain.getExecutionInterval().getUnit());
@@ -83,9 +83,9 @@ public final class ProcessorChainApi extends AbstractApi {
 			throw RestUtils.createJsonFormattedException("filter chain with id " + filterChainId + " already exists", 409);
 
 		ProcessorReferenceChain chainReference = new ProcessorReferenceChain(
-				filterChainId,
-				processorChain.getProcessors(),
-				processorChain.getExecutionInterval());
+			filterChainId,
+			processorChain.getProcessors(),
+			processorChain.getExecutionInterval());
 
 		if (processorChain.getExecutionInterval() != null) chainManager.add(source, sourceManager.getDataRepository(source), chainReference);
 		else chainManager.executeOnce(source, sourceManager.getDataRepository(source), chainReference);
@@ -96,9 +96,9 @@ public final class ProcessorChainApi extends AbstractApi {
 	@DELETE
 	@Path("/{filterChainId}")
 	public void deleteProcessorChain(
-			@RestrictedTo(Role.ADMIN) User user,
-			@PathParam("sourceId") String sourceId,
-			@PathParam("filterChainId") String filterChainId) {
+		@RestrictedTo(Role.ADMIN) User user,
+		@PathParam("sourceId") String sourceId,
+		@PathParam("filterChainId") String filterChainId) {
 
 		DataSource source = sourceManager.findBySourceId(sourceId);
 		ProcessorReferenceChain reference = chainManager.get(source, filterChainId);
@@ -121,3 +121,5 @@ public final class ProcessorChainApi extends AbstractApi {
 	}
 
 }
+
+

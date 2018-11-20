@@ -12,7 +12,6 @@ import org.hibernate.validator.HibernateValidator;
 import org.hibernate.validator.HibernateValidatorConfiguration;
 import org.hibernate.validator.cfg.ConstraintMapping;
 import org.hibernate.validator.cfg.GenericConstraintDef;
-import org.jvalue.commons.auth.rest.UnauthorizedExceptionMapper;
 import org.jvalue.commons.couchdb.rest.DbExceptionMapper;
 import org.jvalue.commons.rest.JsonExceptionMapper;
 import org.jvalue.commons.rest.NotFoundExceptionMapper;
@@ -21,7 +20,8 @@ import org.jvalue.ods.admin.monitoring.DbHealthCheck;
 import org.jvalue.ods.admin.monitoring.MonitoringModule;
 import org.jvalue.ods.admin.rest.AdminFilterChainApi;
 import org.jvalue.ods.api.processors.ProcessorReferenceChainDescription;
-import org.jvalue.ods.auth.AuthBinder;
+import org.jvalue.ods.auth.config.AuthBinder;
+import org.jvalue.ods.auth.exception.UnauthorizedExceptionMapper;
 import org.jvalue.ods.data.DataModule;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.db.DbModule;
@@ -46,7 +46,6 @@ import org.jvalue.ods.rest.v1.VersionApi;
 import org.jvalue.ods.utils.GuiceConstraintValidatorFactory;
 
 import java.util.EnumSet;
-import java.util.List;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;

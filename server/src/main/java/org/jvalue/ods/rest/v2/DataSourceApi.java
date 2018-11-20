@@ -4,12 +4,12 @@ package org.jvalue.ods.rest.v2;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
-import org.jvalue.commons.auth.RestrictedTo;
-import org.jvalue.commons.auth.Role;
-import org.jvalue.commons.auth.User;
 import org.jvalue.commons.rest.RestUtils;
 import org.jvalue.ods.api.sources.DataSource;
 import org.jvalue.ods.api.sources.DataSourceDescription;
+import org.jvalue.ods.auth.RestrictedTo;
+import org.jvalue.ods.auth.Role;
+import org.jvalue.ods.auth.User;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.rest.v2.jsonapi.response.JsonApiResponse;
 

@@ -6,11 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * A registered user.
  */
-public class User {
+public class User implements Serializable {
 
 	@NotNull private final String id;
 	@NotNull private final String name;

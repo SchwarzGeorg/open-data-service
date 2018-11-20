@@ -42,7 +42,7 @@ dependencies {
 	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonCoreVersion"
 	compile "com.hubspot.jackson:jackson-jaxrs-propertyfiltering:$jacksonJaxrsVersion"
     compile "org.jvalue.commons:couchdb:$jvalueCommonsVersion"
-    compile "org.jvalue.commons:auth:$jvalueCommonsVersion"
+    compile "org.jvalue.commons:utils:$jvalueCommonsVersion"
     compile "com.sun.net.httpserver:http:$httpserverVersion"
     compile "javax.xml.bind:jaxb-api:$jaxbVersion"
     compile "com.sun.xml.bind:jaxb-core:$jaxbVersion"

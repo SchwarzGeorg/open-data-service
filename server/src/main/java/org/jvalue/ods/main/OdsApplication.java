@@ -74,8 +74,10 @@ public final class OdsApplication extends Application<OdsConfig> {
 	@Override
 	@Context
 	public void run(OdsConfig configuration, Environment environment) {
+		// wait until db is up
 		assertCouchDbIsReady(configuration.getCouchDb().getUrl());
 
+		// register modules
 		Injector injector = Guice.createInjector(
 				new MonitoringModule(environment.metrics()),
 				new ConfigModule(configuration),

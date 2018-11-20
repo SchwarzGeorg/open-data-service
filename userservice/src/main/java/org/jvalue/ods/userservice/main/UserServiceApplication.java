@@ -12,6 +12,7 @@ import org.hibernate.validator.cfg.ConstraintMapping;
 import org.jvalue.commons.couchdb.rest.DbExceptionMapper;
 import org.jvalue.commons.rest.JsonExceptionMapper;
 import org.jvalue.commons.rest.NotFoundExceptionMapper;
+import org.jvalue.commons.utils.HttpServiceCheck;
 import org.jvalue.ods.userservice.auth.config.AuthBinder;
 import org.jvalue.ods.userservice.auth.AuthModule;
 import org.jvalue.ods.userservice.auth.exception.UnauthorizedExceptionMapper;
@@ -46,7 +47,10 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 	@Override
 	@Context
 	public void run(UserServiceConfig configuration, Environment environment) {
+		// wait until db is up
+		assertCouchDbIsReady(configuration.getCouchDb().getUrl());
 
+		// register modules
 		Injector injector = Guice.createInjector(
 				new DbModule(configuration.getCouchDb()),
 				new AuthModule(configuration.getAuth())
@@ -95,5 +99,12 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		for (BasicAuthUserDescription user : userList) {
 			if (!userManager.contains(user.getEmail())) userManager.add(user);
 		}
+	}
+
+	private void assertCouchDbIsReady(String couchDbUrl) {
+		if (!HttpServiceCheck.check(couchDbUrl)) {
+			throw new RuntimeException("CouchDB service is not ready [" + couchDbUrl+ "]");
+		}
+
 	}
 }

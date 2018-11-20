@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 
 public class UserServiceAuthenticationClient implements RemoteAuthenticationClient {
 
-	// TODO: get this from service discovery
 	public final String userServicePath;
 
 	@Inject

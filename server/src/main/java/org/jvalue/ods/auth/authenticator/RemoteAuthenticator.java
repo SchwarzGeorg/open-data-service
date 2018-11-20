@@ -10,7 +10,7 @@ public class RemoteAuthenticator implements Authenticator {
 
 
 	private final RemoteAuthenticationClient remoteAuthenticationClient;
-	private final Cache cache;
+	private final Cache<String, User> cache;
 
 	@Inject
 	public RemoteAuthenticator(

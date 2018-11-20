@@ -4,28 +4,41 @@ import com.google.common.base.Optional;
 import org.jvalue.commons.auth.Authenticator;
 import org.jvalue.commons.auth.User;
 
+import javax.cache.Cache;
 import javax.inject.Inject;
 
 public class RemoteAuthenticator implements Authenticator {
 
 
 	private final RemoteAuthenticationClient remoteAuthenticationClient;
+	private final Cache cache;
 
 	@Inject
 	public RemoteAuthenticator(
-		RemoteAuthenticationClient remoteAuthenticationClient
+		RemoteAuthenticationClient remoteAuthenticationClient,
+		AuthCacheProvider authCacheProvider
 	) {
 		this.remoteAuthenticationClient = remoteAuthenticationClient;
+		this.cache = authCacheProvider.getCache();
 	}
 
 	@Override
 	public Optional<User> authenticate(String authHeader) {
-		// get user from UserService
-		Optional<User> user = remoteAuthenticationClient.authenticate(authHeader);
+		User user = (User) cache.get(authHeader);
+		if(user != null) {
+			// cache hit
+			return Optional.of(user);
+		}
 
-		// TODO: cache result
+		// get user from UserService
+		Optional<User> userOptional = remoteAuthenticationClient.authenticate(authHeader);
+
+		if(userOptional.isPresent()) {
+			// cache user
+			cache.put(authHeader, userOptional.get());
+		}
 
 		// TODO: react on changes via RabbitMQ
-		return user;
+		return userOptional;
 	}
 }

@@ -74,8 +74,9 @@ public final class OdsApplication extends Application<OdsConfig> {
 	@Override
 	@Context
 	public void run(OdsConfig configuration, Environment environment) {
-		// wait until db is up
+		// wait until dependent services are up
 		assertCouchDbIsReady(configuration.getCouchDb().getUrl());
+		assertUserServiceIsReady(configuration.getAuth().getUserServiceHealthcheckUrl());
 
 		// register modules
 		Injector injector = Guice.createInjector(
@@ -149,6 +150,13 @@ public final class OdsApplication extends Application<OdsConfig> {
 	private void assertCouchDbIsReady(String couchDbUrl) {
 		if (!HttpServiceCheck.check(couchDbUrl)) {
 			throw new RuntimeException("CouchDB service is not ready [" + couchDbUrl+ "]");
+		}
+
+	}
+
+	private void assertUserServiceIsReady(String userServiceUrl) {
+		if (!HttpServiceCheck.check(userServiceUrl)) {
+			throw new RuntimeException("UserService is not ready [" + userServiceUrl+ "]");
 		}
 
 	}

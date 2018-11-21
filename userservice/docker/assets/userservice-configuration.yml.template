@@ -11,6 +11,11 @@ couchDb:
     username: admin
     password: COUCHDB_ODSADMIN_PASSWORD
 
+messaging:
+  brokerUrl: MESSAGE_BROKER_URL
+  brokerUserName: MESSAGE_BROKER_USERNAME
+  brokerPassword: MESSAGE_BROKER_PASSWORD
+
 auth:
     users:
       - name: Admin

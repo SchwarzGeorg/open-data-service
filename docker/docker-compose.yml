@@ -34,6 +34,9 @@ services:
       - COUCHDB_URL=http://usercouchdb:5984/
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=admin
+      - MESSAGE_BROKER_URL=http://rabbitmq:15672/
+      - MESSAGE_BROKER_USERNAME=guest
+      - MESSAGE_BROKER_PASSWORD=guest
     networks:
       - backend
 

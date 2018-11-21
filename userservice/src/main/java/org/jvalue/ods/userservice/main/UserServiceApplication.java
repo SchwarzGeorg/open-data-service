@@ -49,6 +49,7 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 	public void run(UserServiceConfig configuration, Environment environment) {
 		// wait until db is up
 		assertCouchDbIsReady(configuration.getCouchDb().getUrl());
+		assertRabbitMqIsReady(configuration.getMessaging().getBrokerUrl());
 
 		// register modules
 		Injector injector = Guice.createInjector(
@@ -105,6 +106,11 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		if (!HttpServiceCheck.check(couchDbUrl)) {
 			throw new RuntimeException("CouchDB service is not ready [" + couchDbUrl+ "]");
 		}
+	}
 
+	private void assertRabbitMqIsReady(String rabbitMqUrl) {
+		if (!HttpServiceCheck.check(rabbitMqUrl)) {
+			throw new RuntimeException("RabbitMQ is not ready [" + rabbitMqUrl+ "]");
+		}
 	}
 }

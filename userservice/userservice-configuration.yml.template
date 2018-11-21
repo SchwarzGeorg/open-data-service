@@ -10,6 +10,12 @@ couchDb:
     username: ADMIN_USERNAME
     password: ADMIN_PASSWORD
 
+messaging:
+  brokerUrl: http://localhost:5672/
+  brokerUserName: guest
+  brokerPassword: guest
+
+
 auth:
   users:
     - name: Admin

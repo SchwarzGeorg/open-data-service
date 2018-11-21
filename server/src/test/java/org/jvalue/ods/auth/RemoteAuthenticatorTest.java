@@ -7,7 +7,7 @@ import mockit.Verifications;
 import mockit.integration.junit4.JMockit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.jvalue.ods.auth.authenticator.AuthCacheProvider;
+import org.jvalue.ods.auth.authenticator.AuthCache;
 import org.jvalue.ods.auth.authenticator.RemoteAuthenticationClient;
 import org.jvalue.ods.auth.authenticator.RemoteAuthenticator;
 
@@ -24,7 +24,7 @@ public class RemoteAuthenticatorTest {
 	private RemoteAuthenticationClient remoteAuthenticationClient;
 
 	@Mocked
-	private Cache<String, User> authCache;
+	private AuthCache authCache;
 
 	User testUser = new User(
 		"1", "Test User", "test@testUser.de", Role.ADMIN
@@ -37,13 +37,13 @@ public class RemoteAuthenticatorTest {
 			remoteAuthenticationClient.authenticate(anyString);
 			result = Optional.of(testUser);
 
-			authCache.get(authHeader);
+			authCache.getUser(authHeader);
 			returns(null, testUser, testUser);
 		}};
 
 
 		RemoteAuthenticator remoteAuthenticator =
-			new RemoteAuthenticator(remoteAuthenticationClient, new AuthCacheProvider(authCache));
+			new RemoteAuthenticator(remoteAuthenticationClient, authCache);
 		// first call
 		Optional<User> user = remoteAuthenticator.authenticate(authHeader);
 		assertIsTestUser(user);

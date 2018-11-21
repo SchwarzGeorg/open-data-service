@@ -1,7 +1,7 @@
 package org.jvalue.ods.auth;
 
 import com.google.inject.AbstractModule;
-import org.jvalue.ods.auth.authenticator.AuthCacheProvider;
+import org.jvalue.ods.auth.authenticator.AuthCache;
 import org.jvalue.ods.auth.authenticator.RemoteAuthenticationClient;
 import org.jvalue.ods.auth.authenticator.UserServiceAuthenticationClient;
 import org.jvalue.ods.auth.config.AuthConfig;
@@ -30,17 +30,25 @@ public final class AuthModule extends AbstractModule {
 		bind(AuthConfig.class).toInstance(authConfig);
 		bind(RemoteAuthenticationClient.class).toInstance(new UserServiceAuthenticationClient(authConfig));
 
-		// create and bind user cache
+		// create and bind user put
 		CachingProvider cachingProvider = Caching.getCachingProvider();
 		CacheManager cacheManager = cachingProvider.getCacheManager();
-		MutableConfiguration<String, User> config
-			= new MutableConfiguration<>();
-		config.setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(
-			new Duration(TimeUnit.SECONDS, CACHE_EXPIRES_AFTER_SECONDS)));
-		Cache<String, User> cache = cacheManager
-			.createCache("userCache", config);
 
-		bind(AuthCacheProvider.class).toInstance(new AuthCacheProvider(cache));
+		MutableConfiguration<String, User> userCacheConfig
+			= new MutableConfiguration<>();
+		userCacheConfig.setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(
+			new Duration(TimeUnit.SECONDS, CACHE_EXPIRES_AFTER_SECONDS)));
+		Cache<String, User> userCache = cacheManager
+			.createCache("userCache", userCacheConfig);
+
+		MutableConfiguration<String, String> tokenCacheConfig
+			= new MutableConfiguration<>();
+		tokenCacheConfig.setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(
+			new Duration(TimeUnit.SECONDS, CACHE_EXPIRES_AFTER_SECONDS)));
+		Cache<String, String> tokenCache = cacheManager
+			.createCache("tokenCache", tokenCacheConfig);
+
+		bind(AuthCache.class).toInstance(new AuthCache(userCache, tokenCache));
 	}
 
 }

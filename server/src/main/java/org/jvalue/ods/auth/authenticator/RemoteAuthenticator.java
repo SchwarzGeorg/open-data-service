@@ -3,29 +3,28 @@ package org.jvalue.ods.auth.authenticator;
 import com.google.common.base.Optional;
 import org.jvalue.ods.auth.User;
 
-import javax.cache.Cache;
 import javax.inject.Inject;
 
 public class RemoteAuthenticator implements Authenticator {
 
 
 	private final RemoteAuthenticationClient remoteAuthenticationClient;
-	private final Cache<String, User> cache;
+	private final AuthCache cache;
 
 	@Inject
 	public RemoteAuthenticator(
 		RemoteAuthenticationClient remoteAuthenticationClient,
-		AuthCacheProvider authCacheProvider
+		AuthCache authCache
 	) {
 		this.remoteAuthenticationClient = remoteAuthenticationClient;
-		this.cache = authCacheProvider.getCache();
+		this.cache = authCache;
 	}
 
 	@Override
 	public Optional<User> authenticate(String authHeader) {
-		User user = (User) cache.get(authHeader);
+		User user = cache.getUser(authHeader);
 		if(user != null) {
-			// cache hit
+			// put hit
 			return Optional.of(user);
 		}
 
@@ -33,7 +32,7 @@ public class RemoteAuthenticator implements Authenticator {
 		Optional<User> userOptional = remoteAuthenticationClient.authenticate(authHeader);
 
 		if(userOptional.isPresent()) {
-			// cache user
+			// put user
 			cache.put(authHeader, userOptional.get());
 		}
 

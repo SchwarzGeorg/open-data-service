@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import io.dropwizard.Configuration;
 import org.jvalue.ods.auth.config.AuthConfig;
+import org.jvalue.ods.communication.messaging.MessagingConfig;
 
 
 public final class OdsConfig extends Configuration {
@@ -17,15 +18,18 @@ public final class OdsConfig extends Configuration {
 	@NotNull private final String gcmApiKey;
 	@NotNull @Valid private final CouchDbConfig couchDb;
 	@NotNull @Valid private final AuthConfig auth;
+	@NotNull @Valid private final MessagingConfig messaging;
 
 	@JsonCreator
 	public OdsConfig(
 			@JsonProperty("gcmApiKey") String gcmApiKey,
 			@JsonProperty("couchDb") CouchDbConfig couchDb,
+			@JsonProperty("messaging") MessagingConfig messaging,
 			@JsonProperty("auth") AuthConfig auth) {
 
 		this.gcmApiKey = gcmApiKey;
 		this.couchDb = couchDb;
+		this.messaging = messaging;
 		this.auth = auth;
 	}
 
@@ -39,6 +43,10 @@ public final class OdsConfig extends Configuration {
 		return couchDb;
 	}
 
+
+	public MessagingConfig getMessaging() {
+		return messaging;
+	}
 
 	public AuthConfig getAuth() {
 		return auth;

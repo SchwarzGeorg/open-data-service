@@ -76,6 +76,7 @@ public final class OdsApplication extends Application<OdsConfig> {
 	public void run(OdsConfig configuration, Environment environment) {
 		// wait until dependent services are up
 		assertCouchDbIsReady(configuration.getCouchDb().getUrl());
+		assertRabbitMqIsReady(configuration.getMessaging().getBrokerUrl());
 		assertUserServiceIsReady(configuration.getAuth().getUserServiceHealthcheckUrl());
 
 		// register modules
@@ -159,6 +160,12 @@ public final class OdsApplication extends Application<OdsConfig> {
 			throw new RuntimeException("UserService is not ready [" + userServiceUrl+ "]");
 		}
 
+	}
+
+	private void assertRabbitMqIsReady(String rabbitMqUrl) {
+		if (!HttpServiceCheck.check(rabbitMqUrl)) {
+			throw new RuntimeException("RabbitMQ is not ready [" + rabbitMqUrl+ "]");
+		}
 	}
 
 }

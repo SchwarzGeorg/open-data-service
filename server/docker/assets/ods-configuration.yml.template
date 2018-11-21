@@ -12,6 +12,11 @@ server:
   adminContextPath: ODS_ADMIN_CONTEXT_PATH
   applicationContextPath: ODS_CONTEXT_PATH/api
 
+messaging:
+  brokerUrl: MESSAGE_BROKER_URL
+  brokerUserName: MESSAGE_BROKER_USERNAME
+  brokerPassword: MESSAGE_BROKER_PASSWORD
+
 auth:
   userServiceUrl: USER_SERVICE_URL
   userServiceHealthcheckUrl: USER_SERVICE_HEALTH_URL

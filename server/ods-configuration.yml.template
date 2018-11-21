@@ -11,6 +11,11 @@ couchDb:
 server:
   applicationContextPath: /ods/api
 
+messaging:
+  brokerUrl: http://localhost:5672/
+  brokerUserName: guest
+  brokerPassword: guest
+
 auth:
   userServiceUrl: http://localhost:8090/ods/userservice/api/v1
   userServiceHealthcheckUrl: http://localhost:8091/healthcheck

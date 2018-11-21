@@ -15,6 +15,9 @@ services:
       - COUCHDB_PASSWORD=admin
       - USER_SERVICE_URL=http://userservice:8080/ods/userservice/api/v1
       - USER_SERVICE_HEALTH_URL=http://userservice:8081/healthcheck
+      - MESSAGE_BROKER_URL=http://rabbitmq:15672/
+      - MESSAGE_BROKER_USERNAME=guest
+      - MESSAGE_BROKER_PASSWORD=guest
     networks:
       - backend
 
@@ -54,6 +57,17 @@ services:
     networks:
       - backend
 
+  rabbitmq:
+    image: rabbitmq:3.7.8-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    networks:
+      - backend
 networks:
   backend:
     driver: "bridge"

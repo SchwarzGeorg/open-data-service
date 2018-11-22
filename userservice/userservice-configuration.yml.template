@@ -11,7 +11,10 @@ couchDb:
     password: ADMIN_PASSWORD
 
 messaging:
-  brokerUrl: http://localhost:5672/
+  brokerHost: localhost
+  brokerVHost: /
+  brokerPort: 5672
+  brokerManagementPort: 15672
   brokerUserName: guest
   brokerPassword: guest
 

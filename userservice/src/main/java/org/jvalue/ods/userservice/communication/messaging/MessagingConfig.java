@@ -7,23 +7,44 @@ import javax.validation.constraints.NotNull;
 
 public class MessagingConfig {
 
-	@NotNull private final String brokerUrl;
+	@NotNull private final String brokerHost;
+	@NotNull private final String brokerVHost;
+	@NotNull private final String brokerPort;
+	@NotNull private final String brokerManagementPort;
 	@NotNull private final String brokerUserName;
 	@NotNull private final String brokerPassword;
 
 	@JsonCreator
 	public MessagingConfig(
-		@JsonProperty("brokerUrl") String brokerUrl,
+		@JsonProperty("brokerHost") String brokerHost,
+		@JsonProperty("brokerVHost") String brokerVHost,
+		@JsonProperty("brokerPort") String brokerPort,
+		@JsonProperty("brokerManagementPort") String brokerManagementPort,
 		@JsonProperty("brokerUserName") String brokerUserName,
 		@JsonProperty("brokerPassword") String brokerPassword) {
 
-		this.brokerUrl = brokerUrl;
+		this.brokerHost = brokerHost;
+		this.brokerVHost = brokerVHost;
+		this.brokerPort = brokerPort;
+		this.brokerManagementPort = brokerManagementPort;
 		this.brokerUserName = brokerUserName;
 		this.brokerPassword = brokerPassword;
 	}
 
-	public String getBrokerUrl() {
-		return brokerUrl;
+	public String getBrokerHost() {
+		return brokerHost;
+	}
+
+	public String getBrokerVHost() {
+		return brokerVHost;
+	}
+
+	public String getBrokerPort() {
+		return brokerPort;
+	}
+
+	public String getBrokerManagementPort() {
+		return brokerManagementPort;
 	}
 
 	public String getBrokerUserName() {

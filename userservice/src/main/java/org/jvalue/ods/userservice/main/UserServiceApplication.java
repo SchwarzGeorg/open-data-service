@@ -16,7 +16,8 @@ import org.jvalue.commons.utils.HttpServiceCheck;
 import org.jvalue.ods.userservice.auth.AuthModule;
 import org.jvalue.ods.userservice.auth.config.AuthBinder;
 import org.jvalue.ods.userservice.auth.exception.UnauthorizedExceptionMapper;
-import org.jvalue.ods.userservice.user.UserManager;
+import org.jvalue.ods.userservice.communication.CommunicationModule;
+import org.jvalue.ods.userservice.communication.messaging.MessagingConfig;
 import org.jvalue.ods.userservice.db.DbHealthCheck;
 import org.jvalue.ods.userservice.db.DbModule;
 import org.jvalue.ods.userservice.rest.v1.UserApi;
@@ -55,7 +56,8 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		// register modules
 		Injector injector = Guice.createInjector(
 				new DbModule(configuration.getCouchDb()),
-				new AuthModule(configuration.getAuth())
+				new AuthModule(configuration.getAuth()),
+				new CommunicationModule(configuration.getMessaging())
 			);
 
 		// start data grabbing

@@ -2,7 +2,7 @@ package org.jvalue.ods.userservice.communication.messaging;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rabbitmq.client.ConnectionFactory;
-import jdk.internal.jline.internal.Log;
+import org.jvalue.commons.utils.Log;
 import org.jvalue.ods.userservice.utils.JsonMapper;
 
 import java.nio.charset.StandardCharsets;

@@ -22,6 +22,7 @@ import org.jvalue.ods.admin.rest.AdminFilterChainApi;
 import org.jvalue.ods.api.processors.ProcessorReferenceChainDescription;
 import org.jvalue.ods.auth.config.AuthBinder;
 import org.jvalue.ods.auth.exception.UnauthorizedExceptionMapper;
+import org.jvalue.ods.communication.messaging.MessagingConfig;
 import org.jvalue.ods.data.DataModule;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.db.DbModule;
@@ -76,7 +77,7 @@ public final class OdsApplication extends Application<OdsConfig> {
 	public void run(OdsConfig configuration, Environment environment) {
 		// wait until dependent services are up
 		assertCouchDbIsReady(configuration.getCouchDb().getUrl());
-		assertRabbitMqIsReady(configuration.getMessaging().getBrokerUrl());
+		assertRabbitMqIsReady(configuration.getMessaging());
 		assertUserServiceIsReady(configuration.getAuth().getUserServiceHealthcheckUrl());
 
 		// register modules
@@ -162,10 +163,17 @@ public final class OdsApplication extends Application<OdsConfig> {
 
 	}
 
-	private void assertRabbitMqIsReady(String rabbitMqUrl) {
-		if (!HttpServiceCheck.check(rabbitMqUrl)) {
-			throw new RuntimeException("RabbitMQ is not ready [" + rabbitMqUrl+ "]");
+	private void assertRabbitMqIsReady(MessagingConfig messagingConfig) {
+		String rabbitMqHealthCheckUrl = "http://"
+			+ messagingConfig.getBrokerUserName()
+			+ ":"
+			+ messagingConfig.getBrokerPassword()
+			+ "@"
+			+ messagingConfig.getBrokerHost()
+			+ ":"
+			+ messagingConfig.getBrokerManagementPort();
+		if (!HttpServiceCheck.check(rabbitMqHealthCheckUrl)) {
+			throw new RuntimeException("RabbitMQ is not ready [" + rabbitMqHealthCheckUrl+ "]");
 		}
 	}
-
 }

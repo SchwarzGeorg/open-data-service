@@ -13,7 +13,10 @@ server:
   applicationContextPath: ODS_CONTEXT_PATH/api
 
 messaging:
-  brokerUrl: MESSAGE_BROKER_URL
+  brokerHost: MESSAGE_BROKER_HOST
+  brokerVHost: MESSAGE_BROKER_VHOST
+  brokerPort: MESSAGE_BROKER_PORT
+  brokerManagementPort: MESSAGE_BROKER_MANAGEMENT_PORT
   brokerUserName: MESSAGE_BROKER_USERNAME
   brokerPassword: MESSAGE_BROKER_PASSWORD
 

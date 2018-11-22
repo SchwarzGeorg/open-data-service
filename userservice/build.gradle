@@ -42,6 +42,8 @@ dependencies {
 	compile 'com.google.api-client:google-api-client-java6:1.23.0'
 	compile 'com.google.api-client:google-api-client-jackson2:1.23.0'
 
+	compile "com.rabbitmq:amqp-client:$rabbitmqVersion"
+
     testCompile "org.jmockit:jmockit:$jmockitVersion"
     testCompile "junit:junit:$junitVersion"
     testCompile "org.jvalue.commons:couchdb-test:$jvalueCommonsVersion"

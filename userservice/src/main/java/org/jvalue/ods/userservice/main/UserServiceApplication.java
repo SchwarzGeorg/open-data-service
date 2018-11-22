@@ -13,15 +13,16 @@ import org.jvalue.commons.couchdb.rest.DbExceptionMapper;
 import org.jvalue.commons.rest.JsonExceptionMapper;
 import org.jvalue.commons.rest.NotFoundExceptionMapper;
 import org.jvalue.commons.utils.HttpServiceCheck;
-import org.jvalue.ods.userservice.auth.config.AuthBinder;
 import org.jvalue.ods.userservice.auth.AuthModule;
+import org.jvalue.ods.userservice.auth.config.AuthBinder;
 import org.jvalue.ods.userservice.auth.exception.UnauthorizedExceptionMapper;
 import org.jvalue.ods.userservice.user.UserManager;
 import org.jvalue.ods.userservice.db.DbHealthCheck;
 import org.jvalue.ods.userservice.db.DbModule;
-import org.jvalue.ods.userservice.rest.v1.models.BasicAuthUserDescription;
-import org.jvalue.ods.userservice.utils.GuiceConstraintValidatorFactory;
 import org.jvalue.ods.userservice.rest.v1.UserApi;
+import org.jvalue.ods.userservice.rest.v1.models.BasicAuthUserDescription;
+import org.jvalue.ods.userservice.user.UserManager;
+import org.jvalue.ods.userservice.utils.GuiceConstraintValidatorFactory;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -49,7 +50,7 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 	public void run(UserServiceConfig configuration, Environment environment) {
 		// wait until db is up
 		assertCouchDbIsReady(configuration.getCouchDb().getUrl());
-		assertRabbitMqIsReady(configuration.getMessaging().getBrokerUrl());
+		assertRabbitMqIsReady(configuration.getMessaging());
 
 		// register modules
 		Injector injector = Guice.createInjector(
@@ -108,9 +109,17 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 		}
 	}
 
-	private void assertRabbitMqIsReady(String rabbitMqUrl) {
-		if (!HttpServiceCheck.check(rabbitMqUrl)) {
-			throw new RuntimeException("RabbitMQ is not ready [" + rabbitMqUrl+ "]");
+	private void assertRabbitMqIsReady(MessagingConfig messagingConfig) {
+		String rabbitMqHealthCheckUrl = "http://"
+				+ messagingConfig.getBrokerUserName()
+				+ ":"
+				+ messagingConfig.getBrokerPassword()
+				+ "@"
+				+ messagingConfig.getBrokerHost()
+				+ ":"
+				+ messagingConfig.getBrokerManagementPort();
+		if (!HttpServiceCheck.check(rabbitMqHealthCheckUrl)) {
+			throw new RuntimeException("RabbitMQ is not ready [" + rabbitMqHealthCheckUrl+ "]");
 		}
 	}
 }

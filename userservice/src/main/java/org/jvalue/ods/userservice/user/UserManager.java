@@ -8,6 +8,8 @@ import org.jvalue.ods.userservice.auth.util.BasicAuthUtils;
 import org.jvalue.ods.userservice.auth.credentials.BasicCredentials;
 import org.jvalue.ods.userservice.auth.credentials.BasicCredentialsRepository;
 import org.jvalue.ods.userservice.auth.util.OAuthUtils;
+import org.jvalue.ods.userservice.communication.messaging.UserEvent;
+import org.jvalue.ods.userservice.communication.messaging.UserEventProducer;
 import org.jvalue.ods.userservice.rest.v1.models.BasicAuthUserDescription;
 import org.jvalue.ods.userservice.rest.v1.models.OAuthUserDescription;
 
@@ -29,16 +31,21 @@ public final class UserManager {
 	private final BasicCredentialsRepository credentialsRepository;
 	private final BasicAuthUtils authenticationUtils;
 
+	private final UserEventProducer userEventProducer;
+
 
 	@Inject
 	UserManager(
-			UserRepository userRepository,
-			BasicCredentialsRepository credentialsRepository,
-			BasicAuthUtils authenticationUtils) {
+		UserRepository userRepository,
+		BasicCredentialsRepository credentialsRepository,
+		BasicAuthUtils authenticationUtils,
+		UserEventProducer userEventProducer
+	) {
 
 		this.userRepository = userRepository;
 		this.credentialsRepository = credentialsRepository;
 		this.authenticationUtils = authenticationUtils;
+		this.userEventProducer = userEventProducer;
 	}
 
 
@@ -87,6 +94,7 @@ public final class UserManager {
 		credentialsRepository.add(credentials);
 
 		Log.info("added user " + user.getId());
+		userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user.getId()));
 		return user;
 	}
 
@@ -102,6 +110,7 @@ public final class UserManager {
 		userRepository.add(user);
 
 		Log.info("added user " + user.getId());
+		userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user.getId()));
 		return user;
 	}
 
@@ -111,6 +120,7 @@ public final class UserManager {
 		try {
 			BasicCredentials credentials = credentialsRepository.findById(user.getId());
 			credentialsRepository.remove(credentials);
+			userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_DELETED, user.getId()));
 		} catch (DocumentNotFoundException dnfe) {
 			// user wasn't using basic auth
 		}

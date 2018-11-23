@@ -63,9 +63,9 @@ public abstract class AbstractProducer {
 	 */
 	protected abstract void doSetupBroker(Channel channel) throws IOException;
 
-	protected final boolean produce(byte[] message) {
+	protected final boolean produce(String routingKey, byte[] message) {
 		try {
-			doProduce(channel, message);
+			doProduce(channel, routingKey, message);
 			Log.debug("[x] Sent '" + message + "' to " + toString());
 			return true;
 		} catch (NullPointerException | IOException e) {
@@ -78,10 +78,11 @@ public abstract class AbstractProducer {
 	 * Implement the pure sending.
 	 * Be sure to send matching props.
 	 * @param channel
+	 * @param routingKey
 	 * @param message
 	 * @throws IOException
 	 */
-	protected abstract void doProduce(Channel channel, byte[] message) throws IOException ;
+	protected abstract void doProduce(Channel channel, String routingKey, byte[] message) throws IOException ;
 
 	public void close() {
 		Log.info("Close connection to RabbitMq server: " + toString());

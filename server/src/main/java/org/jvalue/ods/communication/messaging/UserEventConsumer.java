@@ -6,22 +6,21 @@ import java.io.IOException;
 
 public class UserEventConsumer extends AbstractConsumer {
 
-	private static final String EXCHANGE_NAME = "user-exchange";
-	private static final String EXCHANGE_TYPE = "fanout";
-	private final MessagingConfig messagingConfig;
+	private static final String EXCHANGE_NAME = "user-event-exchange";
+	private static final String EXCHANGE_TYPE = "topic";
+	private static final String ROUTING_KEY = "user.#"; // user.anything
 	private String queueName;
 
 
 	public UserEventConsumer(ConnectionFactory factory, MessagingConfig messagingConfig) {
 		super(factory, messagingConfig);
-		this.messagingConfig = messagingConfig;
 	}
 
 	@Override
 	protected void doSetupBroker(Channel channel) throws IOException {
 		channel.exchangeDeclare(EXCHANGE_NAME, EXCHANGE_TYPE);
 		this.queueName = channel.queueDeclare().getQueue();
-		channel.queueBind(queueName, EXCHANGE_NAME, "");
+		channel.queueBind(queueName, EXCHANGE_NAME, ROUTING_KEY);
 	}
 
 	@Override

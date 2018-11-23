@@ -9,11 +9,10 @@ import org.jvalue.ods.userservice.utils.JsonMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class UserEventProducer extends AbstractProducer {
+public class UserEventProducer extends AbstractProducer{
 
-	private static final String ROUTING_KEY = "user-events";
-	private static final String EXCHANGE_NAME = "user-exchange";
-	private static final String EXCHANGE_TYPE = "fanout";
+	private static final String EXCHANGE_NAME = "user-event-exchange";
+	private static final String EXCHANGE_TYPE = "topic";
 
 	private final MessagingConfig messagingConfig;
 
@@ -27,10 +26,19 @@ public class UserEventProducer extends AbstractProducer {
 		String message = null;
 		try {
 			message = JsonMapper.writeValueAsString(userEvent);
-			return super.produce(message.getBytes(StandardCharsets.UTF_8));
+			return super.produce(getRoutingKey(userEvent), message.getBytes(StandardCharsets.UTF_8));
 		} catch (JsonProcessingException e) {
 			Log.error("Could not convert UserEvent to JSON object!");
 			return false;
+		}
+	}
+
+	private String getRoutingKey(UserEvent userEvent) {
+		switch (userEvent.getType()) {
+			case USER_CREATED: return "user.created";
+			case USER_UPDATED: return "user.updated";
+			case USER_DELETED: return "user.deleted";
+			default: return "user";
 		}
 	}
 
@@ -40,8 +48,8 @@ public class UserEventProducer extends AbstractProducer {
 	}
 
 	@Override
-	protected void doProduce(Channel channel, byte[] message) throws IOException {
-		channel.basicPublish(EXCHANGE_NAME, ROUTING_KEY, null, message);
+	protected void doProduce(Channel channel, String routingKey, byte[] message) throws IOException {
+		channel.basicPublish(EXCHANGE_NAME, routingKey, null, message);
 	}
 
 	@Override

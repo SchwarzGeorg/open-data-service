@@ -22,6 +22,7 @@ import org.jvalue.ods.admin.rest.AdminFilterChainApi;
 import org.jvalue.ods.api.processors.ProcessorReferenceChainDescription;
 import org.jvalue.ods.auth.config.AuthBinder;
 import org.jvalue.ods.auth.exception.UnauthorizedExceptionMapper;
+import org.jvalue.ods.communication.CommunicationModule;
 import org.jvalue.ods.communication.messaging.MessagingConfig;
 import org.jvalue.ods.data.DataModule;
 import org.jvalue.ods.data.DataSourceManager;
@@ -89,7 +90,8 @@ public final class OdsApplication extends Application<OdsConfig> {
 				new NotificationsModule(),
 				new DataModule(),
 				new AuthModule(configuration.getAuth()),
-				new DataTransformationModule());
+				new DataTransformationModule(),
+				new CommunicationModule(configuration.getMessaging()));
 
 		// start data grabbing
 		environment.lifecycle().manage(injector.getInstance(DataSourceManager.class));

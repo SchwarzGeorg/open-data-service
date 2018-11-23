@@ -1,4 +1,4 @@
-package org.jvalue.ods.userservice.communication.messaging;
+package org.jvalue.ods.communication.messaging;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

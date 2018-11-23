@@ -39,6 +39,7 @@ public class UserEventConsumer extends AbstractConsumer {
 									   AMQP.BasicProperties properties, byte[] body) throws IOException {
 				String message = new String(body, "UTF-8");
 				System.out.println(" [x] Received '" + message + "'");
+				UserEvent userEvent = JsonMapper.readValue(message, UserEvent.class);
 			}
 		};
 	}

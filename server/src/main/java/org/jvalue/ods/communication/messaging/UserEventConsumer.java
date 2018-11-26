@@ -31,17 +31,20 @@ public class UserEventConsumer extends AbstractConsumer {
 		return queueName;
 	}
 
-	@Override
-	protected Consumer getConsumer(Channel channel) {
-		return new DefaultConsumer(channel) {
+	public void registerEventHandler(UserEventHandler eventHandler) {
+		Consumer consumer = new DefaultConsumer(getChannel()) {
 			@Override
 			public void handleDelivery(String consumerTag, Envelope envelope,
 									   AMQP.BasicProperties properties, byte[] body) throws IOException {
 				String message = new String(body, "UTF-8");
 				System.out.println(" [x] Received '" + message + "'");
 				UserEvent userEvent = JsonMapper.readValue(message, UserEvent.class);
+
+				eventHandler.handleEvent(userEvent);
 			}
 		};
+
+		registerConsumer(getQueueName(), consumer);
 	}
 
 	@Override

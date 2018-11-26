@@ -47,7 +47,6 @@ public abstract class AbstractConsumer {
 			connection = factory.newConnection();
 			channel = connection.createChannel();
 			doSetupBroker(channel);
-			registerConsumer(getQueueName(), getConsumer(channel));
 		} catch (IOException | TimeoutException e) {
 			Log.error("Unable to connect to RabbitMQ server: " + this.toString(), e);
 			return false;
@@ -77,12 +76,9 @@ public abstract class AbstractConsumer {
 	 */
 	protected abstract String getQueueName();
 
-	/**
-	 * Get the consumer that is triggered every time a message is received
-	 * @param channel
-	 * @return
-	 */
-	protected abstract  Consumer getConsumer(Channel channel);
+	protected final Channel getChannel() {
+		return this.channel;
+	}
 
 	public void close() {
 		Log.info("Close connection to RabbitMq server: " + toString());

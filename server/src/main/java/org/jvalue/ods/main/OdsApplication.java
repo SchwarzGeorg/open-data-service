@@ -89,9 +89,9 @@ public final class OdsApplication extends Application<OdsConfig> {
 				new DbModule(configuration.getCouchDb()),
 				new NotificationsModule(),
 				new DataModule(),
-				new AuthModule(configuration.getAuth()),
-				new DataTransformationModule(),
-				new CommunicationModule(configuration.getMessaging()));
+				new CommunicationModule(configuration.getMessaging()),
+				new AuthModule(configuration.getAuth()), // must be registered after communication module
+				new DataTransformationModule());
 
 		// start data grabbing
 		environment.lifecycle().manage(injector.getInstance(DataSourceManager.class));

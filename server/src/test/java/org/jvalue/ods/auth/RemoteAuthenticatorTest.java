@@ -10,11 +10,10 @@ import org.junit.runner.RunWith;
 import org.jvalue.ods.auth.authenticator.AuthCache;
 import org.jvalue.ods.auth.authenticator.RemoteAuthenticationClient;
 import org.jvalue.ods.auth.authenticator.RemoteAuthenticator;
+import org.jvalue.ods.communication.messaging.UserEventConsumer;
 
-
-import javax.cache.Cache;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JMockit.class)
 public class RemoteAuthenticatorTest {
@@ -25,6 +24,10 @@ public class RemoteAuthenticatorTest {
 
 	@Mocked
 	private AuthCache authCache;
+
+	@Mocked
+	private UserEventConsumer userEventConsumer;
+
 
 	User testUser = new User(
 		"1", "Test User", "test@testUser.de", Role.ADMIN
@@ -43,7 +46,7 @@ public class RemoteAuthenticatorTest {
 
 
 		RemoteAuthenticator remoteAuthenticator =
-			new RemoteAuthenticator(remoteAuthenticationClient, authCache);
+			new RemoteAuthenticator(remoteAuthenticationClient, authCache, userEventConsumer);
 		// first call
 		Optional<User> user = remoteAuthenticator.authenticate(authHeader);
 		assertIsTestUser(user);

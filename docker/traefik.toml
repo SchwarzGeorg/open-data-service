@@ -27,10 +27,10 @@ defaultEntryPoints = ["http"]
                 backend = "userservice"
                 passHostHeader = true
                         [frontends.userservice.routes.route1]
-                        rule = "PathPrefix:/ods/api/v1/users"
+                        rule = "PathPrefix:/ods/api/v{[0-9]+}/users"
         [frontends.ods]
                 backend = "ods"
                 passHostHeader = true
                         [frontends.ods.routes.route1]
-                        rule = "PathPrefix:/ods/api/v1/"
+                        rule = "PathPrefix:/ods/api/v{[0-9]+}/"
 

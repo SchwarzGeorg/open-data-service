@@ -1,0 +1,36 @@
+defaultEntryPoints = ["http"]
+
+debug = true
+logLevel = "DEBUG"
+
+[api]
+        entrypoint = "http"
+        address = ":80"
+[entryPoints]
+        [entryPoints.http]
+                address = ":80"
+
+[file]
+[backends]
+
+  [backends.userservice]
+    [backends.userservice.servers]
+      [backends.userservice.servers.server0]
+        url = "http://userservice:8080"
+  [backends.ods]
+	[backends.ods.servers]
+	  [backends.ods.servers.server0]
+		url = "http://ods:8080"
+
+[frontends]
+        [frontends.userservice]
+                backend = "userservice"
+                passHostHeader = true
+                        [frontends.userservice.routes.route1]
+                        rule = "PathPrefix:/ods/api/v1/users"
+        [frontends.ods]
+                backend = "ods"
+                passHostHeader = true
+                        [frontends.ods.routes.route1]
+                        rule = "PathPrefix:/ods/api/v1/"
+

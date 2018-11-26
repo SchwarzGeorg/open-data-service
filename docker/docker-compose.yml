@@ -3,8 +3,8 @@ services:
   ods:
     image: mojo-docker.cs.fau.de/osrg_ods_public/ods-server-cd:latest
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "8070:8080"
+      - "8071:8081"
     environment:
       - COUCHDB_MAX_CONNECTIONS=100
       - ODS_ADMIN_CONTEXT_PATH=/
@@ -77,6 +77,19 @@ services:
       - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
     networks:
       - backend
+
+  reverse-proxy:
+    image: traefik # The official Traefik docker image
+    command: --api --docker # Enables the web UI and tells Traefik to listen to docker
+    ports:
+      - "80:80"     # The HTTP port
+      - "8081:8080"   # The Web UI (enabled by --api)
+    volumes:
+      - ./traefik.toml:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+    networks:
+      - backend
+
 networks:
   backend:
     driver: "bridge"

@@ -9,8 +9,8 @@ couchDb:
     password: ADMIN_PASSWORD
 
 server:
-  applicationContextPath: /ods/api
-
+  applicationContextPath: /ods
+  
 messaging:
   brokerHost: localhost
   brokerVHost: /

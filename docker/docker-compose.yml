@@ -32,7 +32,7 @@ services:
     environment:
       - COUCHDB_MAX_CONNECTIONS=100
       - ODS_ADMIN_CONTEXT_PATH=/
-      - ODS_CONTEXT_PATH=/ods/userservice
+      - ODS_CONTEXT_PATH=/ods
       - ODS_ADMIN_PASSWORD=admin123
       - COUCHDB_URL=http://usercouchdb:5984/
       - COUCHDB_USER=admin

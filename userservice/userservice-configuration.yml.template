@@ -1,6 +1,6 @@
 
 server:
-  applicationContextPath: /ods/userservice/api
+  applicationContextPath: /ods
 
 couchDb:
   url: http://localhost:5994/

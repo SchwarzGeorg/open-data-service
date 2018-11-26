@@ -21,6 +21,11 @@ services:
       - MESSAGE_BROKER_MANAGEMENT_PORT=15672
       - MESSAGE_BROKER_USERNAME=guest
       - MESSAGE_BROKER_PASSWORD=guest
+    labels: # traefic reverse-proxy config
+      - "traefik.backend=userservice"
+      - "traefik.frontend.rule=PathPrefix:/ods/api/v{[0-9]+}/"
+      - "traefik.frontend.passHostHeader=true"
+      - "traefik.docker.network=backend"
     networks:
       - backend
 
@@ -43,6 +48,11 @@ services:
       - MESSAGE_BROKER_MANAGEMENT_PORT=15672
       - MESSAGE_BROKER_USERNAME=guest
       - MESSAGE_BROKER_PASSWORD=guest
+    labels: # traefic reverse-proxy config
+      - "traefik.backend=ods"
+      - "traefik.frontend.rule=PathPrefix:/ods/api/v{[0-9]+}/users"
+      - "traefik.frontend.passHostHeader=true"
+      - "traefik.docker.network=backend"
     networks:
       - backend
 
@@ -85,7 +95,6 @@ services:
       - "8080:80"     # The HTTP port
       - "8081:8080"   # The Web UI (enabled by --api)
     volumes:
-      - ./traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
     networks:
       - backend

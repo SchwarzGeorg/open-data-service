@@ -6,8 +6,6 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.spi.internal.ValueFactoryProvider;
 import org.jvalue.ods.auth.RestrictedTo;
 import org.jvalue.ods.auth.authenticator.RemoteAuthenticator;
-import org.jvalue.ods.auth.config.RestrictedToProvider;
-import org.jvalue.ods.auth.config.RestrictedToResolver;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

@@ -30,7 +30,7 @@ public final class AuthModule extends AbstractModule {
 		bind(AuthConfig.class).toInstance(authConfig);
 		bind(RemoteAuthenticationClient.class).toInstance(new UserServiceAuthenticationClient(authConfig));
 
-		// create and bind user put
+		// create and bind user-cache
 		CachingProvider cachingProvider = Caching.getCachingProvider();
 		CacheManager cacheManager = cachingProvider.getCacheManager();
 

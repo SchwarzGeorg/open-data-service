@@ -3,7 +3,6 @@ package org.jvalue.ods.auth.config;
 
 import org.glassfish.jersey.server.internal.inject.ParamInjectionResolver;
 import org.jvalue.ods.auth.RestrictedTo;
-import org.jvalue.ods.auth.config.RestrictedToProvider;
 
 
 /**

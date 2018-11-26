@@ -4,5 +4,5 @@ import com.google.common.base.Optional;
 import org.jvalue.ods.auth.User;
 
 public interface RemoteAuthenticationClient {
-	public Optional<User> authenticate(String authHeader);
+	Optional<User> authenticate(String authHeader);
 }

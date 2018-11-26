@@ -52,6 +52,7 @@ dependencies {
     compile "org.javadelight:delight-nashorn-sandbox:$nashornSandboxVersion"
 	compile "javax.cache:cache-api:$jCacheVersion"
 	compile "com.hazelcast:hazelcast:$hazelcastVersion"
+	compile "net.jodah:failsafe:$failsaveVersion"
     compile project(':models')
     compile fileTree(dir: 'libs', include: '*.jar')
 

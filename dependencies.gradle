@@ -24,6 +24,7 @@ ext {
     osmosisVersion = "0.45"
 	jCacheVersion = "1.0.0"
 	hazelcastVersion = "3.11"
+	failsaveVersion = "1.1.1"
 
     //testCompile dependencies
     junitVersion ="4.12"

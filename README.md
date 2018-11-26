@@ -10,15 +10,21 @@ It is currently actively being used for gathering water level information about 
 The ODS is divided into a number of gradle modules:
 
 - `server`: the main server application, built using [Dropwizard](http://www.dropwizard.io/)
+- `userservice`: the microservice responsible for user management, built using [Dropwizard](http://www.dropwizard.io/)
 - `models`: domain models
 - `client-retrofit`: a Java client implementation for the REST API of the ODS
 
 
 ## Setup
 
+_NOTE_: Please only use the DOCKER way to startup the services!
+
 The ODS uses [Apache CouchDb](https://couchdb.apache.org/) as its underlying data storage. In oder to run the ODS you will need to have CouchDb setup.
 
-To configure the ODS copy `server/ods-configuration.yml.template` to `server/ods-configuration.yml` and supply the missing values:
+To configure the ODS 
+- copy `server/ods-configuration.yml.template` to `server/ods-configuration.yml` 
+- copy `userservice/ods-configuration.yml.template` to `userservice/ods-configuration.yml` 
+- and supply the missing values:
 
 - `gcmApiKey`: the ODS allows clients to receive updates about new data via Google Cloud Messaging (GCM). To enable this feature you will need to enter your GCM Api key here
 - `couchdb username` and `couchdb password`: admin credentials for CouchDb
@@ -39,10 +45,16 @@ An easy way to use the ODS is via a pre build Docker image.  Therefore use docke
 `docker-compose -f docker/docker-compose.yml up`
 
 ### Building a Docker Image
-You can build a local Docker image from source files using the Gradle task `./gradlew dockerBuild`.
+You can build a local Docker images from source files using the Gradle task `./gradlew dockerBuild`.
 To run the local image with docker-compose call:
 
 `docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up`
+
+With this command all required docker containers are started up. This includes
+- the `ods` server and its `database`
+- the `userservice` server and its `database`
+- the message broker `rabbitmq` as async communcation between the micro-services
+- the reverse-proxy `traefik` that bundles all endpoints to one common entry point
 
 
 ## Usage
@@ -121,7 +133,9 @@ The are two types of tests in this repo: unit tests and integration tests. The u
 
 ## Health checks
 
-The ODS has a number of [health checks](https://dropwizard.github.io/dropwizard/getting-started.html#creating-a-health-check) which ensure that a running instance of the ODS conforms to the requirements of the Pegel Alarm application. To see the output of those health checks simply go to `/{adminContextPath}/healthcheck`. The default config for localhost is [http://localhost:8081/healthcheck](http://localhost:8081/healthcheck).
+The ODS has a number of [health checks](https://dropwizard.github.io/dropwizard/getting-started.html#creating-a-health-check) which ensure that a running instance of the ODS conforms to the requirements of the Pegel Alarm application. To see the output of those health checks simply go to `/{adminContextPath}/healthcheck`. The default config for localhost is 
+- `ods`: [http://localhost:8071/healthcheck](http://localhost:8071/healthcheck).
+- `userservice`: [http://localhost:8091/healthcheck](http://localhost:8091/healthcheck).
 
 ## License
 Copyright 2014-2018 Friedrich-Alexander Universität Erlangen-Nürnberg

@@ -1,7 +1,7 @@
 defaultEntryPoints = ["http"]
 
-debug = true
-logLevel = "DEBUG"
+# debug = true
+# logLevel = "DEBUG"
 
 [api]
         entrypoint = "http"

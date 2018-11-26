@@ -37,6 +37,10 @@ public class DbModule extends AbstractModule {
 					.build());
 			DbConnectorFactory connectorFactory = new DbConnectorFactory(couchDbInstance, couchDbConfig.getDbPrefix());
 
+			// create _users database because couchdb throws errors otherwise, it is not required for any functionality!
+			// for more infos see https://github.com/apache/couchdb-docker
+			couchDbInstance.createConnector("_users", true);
+
 			CouchDbConnector dataSourceConnector = connectorFactory.createConnector(DataSourceRepository.DATABASE_NAME, true);
 			bind(CouchDbConnector.class).annotatedWith(Names.named(DataSourceRepository.DATABASE_NAME)).toInstance(dataSourceConnector);
 

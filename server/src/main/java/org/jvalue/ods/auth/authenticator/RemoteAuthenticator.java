@@ -50,7 +50,6 @@ public class RemoteAuthenticator implements Authenticator {
 			cache.put(authHeader, userOptional.get());
 		}
 
-		// TODO: react on changes via RabbitMQ
 		return userOptional;
 	}
 }

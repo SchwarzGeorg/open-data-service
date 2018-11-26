@@ -13,7 +13,7 @@ services:
       - COUCHDB_URL=http://couchdb:5984/
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=admin
-      - USER_SERVICE_URL=http://userservice:8080/ods/userservice/api/v1
+      - USER_SERVICE_URL=http://userservice:8080/ods/api/v1
       - USER_SERVICE_HEALTH_URL=http://userservice:8081/healthcheck
       - MESSAGE_BROKER_HOST=rabbitmq
       - MESSAGE_BROKER_VHOST=/

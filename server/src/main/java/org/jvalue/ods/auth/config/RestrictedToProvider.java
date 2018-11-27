@@ -12,7 +12,6 @@ import org.jvalue.ods.auth.RestrictedTo;
 import org.jvalue.ods.auth.Role;
 import org.jvalue.ods.auth.User;
 import org.jvalue.ods.auth.authenticator.Authenticator;
-import org.jvalue.ods.auth.authenticator.RemoteAuthenticator;
 import org.jvalue.ods.auth.exception.UnauthorizedException;
 
 import javax.inject.Inject;
@@ -26,16 +25,16 @@ import java.util.List;
  */
 public final class RestrictedToProvider extends AbstractValueFactoryProvider {
 
-	private final RemoteAuthenticator remoteAuthenticator;
+	private final Authenticator authenticator;
 
 	@Inject
 	protected RestrictedToProvider(
 			MultivaluedParameterExtractorProvider mpep,
 			ServiceLocator locator,
-			RemoteAuthenticator remoteAuthenticator) {
+			Authenticator authenticator) {
 
 		super(mpep, locator, Parameter.Source.UNKNOWN);
-		this.remoteAuthenticator = remoteAuthenticator;
+		this.authenticator = authenticator;
 	}
 
 
@@ -61,8 +60,8 @@ public final class RestrictedToProvider extends AbstractValueFactoryProvider {
 				Optional<User> user = Optional.absent();
 
 				// if basic or bearer authentication, then forward to UserService
-				if (authHeader.startsWith("Basic ")) user = remoteAuthenticator.authenticate(authHeader);
-				if (authHeader.startsWith("Bearer ")) user = remoteAuthenticator.authenticate(authHeader);
+				if (authHeader.startsWith("Basic ")) user = authenticator.authenticate(authHeader);
+				if (authHeader.startsWith("Bearer ")) user = authenticator.authenticate(authHeader);
 
 				if (!user.isPresent()) return onUnauthorized(isAuthOptional);
 

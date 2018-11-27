@@ -1,9 +1,7 @@
 package org.jvalue.ods.auth;
 
 import com.google.inject.AbstractModule;
-import org.jvalue.ods.auth.authenticator.AuthCache;
-import org.jvalue.ods.auth.authenticator.RemoteAuthenticationClient;
-import org.jvalue.ods.auth.authenticator.UserServiceAuthenticationClient;
+import org.jvalue.ods.auth.authenticator.*;
 import org.jvalue.ods.auth.config.AuthConfig;
 
 import javax.cache.Cache;
@@ -15,7 +13,11 @@ import javax.cache.expiry.Duration;
 import javax.cache.spi.CachingProvider;
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * This class is used to register all neccessary classes
+ * required for the guice DI.
+ * This includes especially everything that is injected via @Inject.
+ */
 public final class AuthModule extends AbstractModule {
 
 	private static final long CACHE_EXPIRES_AFTER_SECONDS = 600;
@@ -28,6 +30,8 @@ public final class AuthModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		bind(AuthConfig.class).toInstance(authConfig);
+
+		// bind UserServiceAuthenticationClient
 		bind(RemoteAuthenticationClient.class).toInstance(new UserServiceAuthenticationClient(authConfig));
 
 		// create and bind user-cache
@@ -49,6 +53,10 @@ public final class AuthModule extends AbstractModule {
 			.createCache("tokenCache", tokenCacheConfig);
 
 		bind(AuthCache.class).toInstance(new AuthCache(userCache, tokenCache));
+
+		// bind RemoteAuthenticator
+		// (make sure RemoteAuthencationClient, AuthCache and UserEventConsumer are already registered!)
+		bind(Authenticator.class).to(RemoteAuthenticator.class);
 	}
 
 }

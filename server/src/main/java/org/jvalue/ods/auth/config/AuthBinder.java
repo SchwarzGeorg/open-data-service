@@ -5,11 +5,17 @@ import org.glassfish.hk2.api.TypeLiteral;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.spi.internal.ValueFactoryProvider;
 import org.jvalue.ods.auth.RestrictedTo;
+import org.jvalue.ods.auth.authenticator.Authenticator;
 import org.jvalue.ods.auth.authenticator.RemoteAuthenticator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * This class is used to register all neccessary classes
+ * required for the javax DI.
+ * This includes especially everything that is connected to annotations for endpoints.
+ */
 public class AuthBinder extends AbstractBinder {
 
 	private final RemoteAuthenticator remoteAuthenticator;
@@ -22,7 +28,8 @@ public class AuthBinder extends AbstractBinder {
 
 	@Override
 	protected void configure() {
-		bind(remoteAuthenticator);
+		bind(remoteAuthenticator)
+			.to(Authenticator.class);
 
 		bind(RestrictedToProvider.class)
 			.to(ValueFactoryProvider.class)

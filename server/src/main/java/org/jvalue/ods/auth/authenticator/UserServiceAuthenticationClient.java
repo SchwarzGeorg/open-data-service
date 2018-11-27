@@ -6,7 +6,6 @@ import net.jodah.failsafe.RetryPolicy;
 import org.jvalue.ods.auth.User;
 import org.jvalue.ods.auth.config.AuthConfig;
 
-import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.HttpHeaders;
@@ -22,7 +21,6 @@ public class UserServiceAuthenticationClient implements RemoteAuthenticationClie
 
 	private RetryPolicy retryPolicy;
 
-	@Inject
 	public UserServiceAuthenticationClient(
 		AuthConfig authConfig
 	) {

@@ -17,8 +17,6 @@ The ODS is divided into a number of gradle modules:
 
 ## Setup
 
-_NOTE_: Please only use the DOCKER way to startup the services!
-
 The ODS uses [Apache CouchDb](https://couchdb.apache.org/) as its underlying data storage. In oder to run the ODS you will need to have CouchDb setup.
 
 To configure the ODS 
@@ -34,7 +32,8 @@ To configure the ODS
 
 Once done you should be able to run
 
-`./gradlew run` (Windows users use the `.bat` version) 
+- `./gradlew run` or `./gradlew server:run` (Windows users use the `.bat` version)  to run the `server` project
+- `./gradlew userservice:run` to run the `userservice` project
 
 which first downloads all required dependencies and then starts the ODS. The server should be be running at [http://localhost:8080/ods/api/v1](http://localhost:8080/ods/api/v1).
 

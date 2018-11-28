@@ -7,9 +7,9 @@ import org.jvalue.commons.rest.RestUtils;
 import org.jvalue.ods.api.sources.DataSource;
 import org.jvalue.ods.api.views.DataView;
 import org.jvalue.ods.api.views.DataViewDescription;
+import org.jvalue.ods.auth.AuthUser;
 import org.jvalue.ods.auth.RestrictedTo;
 import org.jvalue.ods.auth.Role;
-import org.jvalue.ods.auth.User;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.data.DataViewManager;
 
@@ -68,7 +68,7 @@ public final class DataViewApi extends AbstractApi {
 	@PUT
 	@Path("/{viewId}")
 	public DataView addView(
-			@RestrictedTo(Role.ADMIN) User user,
+			@RestrictedTo(Role.ADMIN) AuthUser authUser,
 			@PathParam("sourceId") String sourceId,
 			@PathParam("viewId") String viewId,
 			@Valid DataViewDescription viewDescription) {
@@ -86,7 +86,7 @@ public final class DataViewApi extends AbstractApi {
 	@DELETE
 	@Path("/{viewId}")
 	public void deleteView(
-			@RestrictedTo(Role.ADMIN) User user,
+			@RestrictedTo(Role.ADMIN) AuthUser authUser,
 			@PathParam("sourceId") String sourceId,
 			@PathParam("viewId") String viewId) {
 

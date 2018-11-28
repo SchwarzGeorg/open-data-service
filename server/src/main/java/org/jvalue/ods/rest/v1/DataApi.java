@@ -10,7 +10,7 @@ import org.jvalue.commons.rest.RestUtils;
 import org.jvalue.ods.api.data.Data;
 import org.jvalue.ods.auth.RestrictedTo;
 import org.jvalue.ods.auth.Role;
-import org.jvalue.ods.auth.User;
+import org.jvalue.ods.auth.AuthUser;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.db.DataRepository;
 
@@ -51,7 +51,7 @@ public final class DataApi extends AbstractApi {
 
 	@DELETE
 	public void deleteAllObjects(
-			@RestrictedTo(Role.ADMIN) User user,
+			@RestrictedTo(Role.ADMIN) AuthUser authUser,
 			@PathParam("sourceId") String sourceId) {
 
 		DataRepository repository = assertIsValidSource(sourceId);

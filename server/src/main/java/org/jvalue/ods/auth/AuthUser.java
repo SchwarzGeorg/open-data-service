@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * A registered user.
  */
-public class User implements Serializable {
+public class AuthUser implements Serializable {
 
 	@NotNull private final String id;
 	@NotNull private final String name;
@@ -19,7 +19,7 @@ public class User implements Serializable {
 	@NotNull private final Role role;
 
 	@JsonCreator
-	public User(
+	public AuthUser(
 			@JsonProperty("id") String id,
 			@JsonProperty("name") String name,
 			@JsonProperty("email") String email,
@@ -54,12 +54,12 @@ public class User implements Serializable {
 
 	@Override
 	public boolean equals(Object other) {
-		if (other == null || !(other instanceof User)) return false;
-		User user = (User) other;
-		return Objects.equal(id, user.id)
-				&& Objects.equal(name, user.name)
-				&& Objects.equal(email, user.email)
-				&& Objects.equal(role, user.role);
+		if (other == null || !(other instanceof AuthUser)) return false;
+		AuthUser authUser = (AuthUser) other;
+		return Objects.equal(id, authUser.id)
+				&& Objects.equal(name, authUser.name)
+				&& Objects.equal(email, authUser.email)
+				&& Objects.equal(role, authUser.role);
 	}
 
 

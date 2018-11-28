@@ -3,7 +3,7 @@ package org.jvalue.ods.auth;
 import java.util.EnumSet;
 
 /**
- * User roles.
+ * AuthUser roles.
  */
 public enum Role {
 

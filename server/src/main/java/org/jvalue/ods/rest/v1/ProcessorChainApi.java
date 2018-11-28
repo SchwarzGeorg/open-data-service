@@ -9,7 +9,7 @@ import org.jvalue.ods.api.processors.ProcessorReferenceChainDescription;
 import org.jvalue.ods.api.sources.DataSource;
 import org.jvalue.ods.auth.RestrictedTo;
 import org.jvalue.ods.auth.Role;
-import org.jvalue.ods.auth.User;
+import org.jvalue.ods.auth.AuthUser;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.processor.ProcessorChainManager;
 
@@ -69,7 +69,7 @@ public final class ProcessorChainApi extends AbstractApi {
 	@PUT
 	@Path("/{filterChainId}")
 	public ProcessorReferenceChain addProcessorChain(
-		@RestrictedTo(Role.ADMIN) User user,
+		@RestrictedTo(Role.ADMIN) AuthUser authUser,
 		@PathParam("sourceId") String sourceId,
 		@PathParam("filterChainId") String filterChainId,
 		@Valid ProcessorReferenceChainDescription processorChain) {
@@ -96,7 +96,7 @@ public final class ProcessorChainApi extends AbstractApi {
 	@DELETE
 	@Path("/{filterChainId}")
 	public void deleteProcessorChain(
-		@RestrictedTo(Role.ADMIN) User user,
+		@RestrictedTo(Role.ADMIN) AuthUser authUser,
 		@PathParam("sourceId") String sourceId,
 		@PathParam("filterChainId") String filterChainId) {
 

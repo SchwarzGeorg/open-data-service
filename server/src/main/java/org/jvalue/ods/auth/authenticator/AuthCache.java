@@ -1,6 +1,6 @@
 package org.jvalue.ods.auth.authenticator;
 
-import org.jvalue.ods.auth.User;
+import org.jvalue.ods.auth.AuthUser;
 
 import javax.cache.Cache;
 
@@ -11,25 +11,25 @@ import javax.cache.Cache;
  */
 public class AuthCache {
 
-	private final Cache<String, User> userCache; // authHeader -> user
+	private final Cache<String, AuthUser> userCache; // authHeader -> user
 	private final Cache<String, String> tokenCache; // userId -> token
 
-	public AuthCache(Cache<String, User> userCache, Cache<String, String> tokenCache) {
+	public AuthCache(Cache<String, AuthUser> userCache, Cache<String, String> tokenCache) {
 		this.userCache = userCache;
 		this.tokenCache = tokenCache;
 	}
 
-	public void put(String token, User user) {
-		userCache.put(token, user);
-		tokenCache.put(user.getId(), token);
+	public void put(String token, AuthUser authUser) {
+		userCache.put(token, authUser);
+		tokenCache.put(authUser.getId(), token);
 	}
 
 	public void invalidateByToken(String token) {
-		User user = userCache.getAndRemove(token);
-		if(user == null) {
+		AuthUser authUser = userCache.getAndRemove(token);
+		if(authUser == null) {
 			return;
 		}
-		tokenCache.remove(user.getId());
+		tokenCache.remove(authUser.getId());
 	}
 
 	public void invalidateByUserId(String userId) {
@@ -40,7 +40,7 @@ public class AuthCache {
 		userCache.remove(token);
 	}
 
-	public User getUser(String token) {
+	public AuthUser getUser(String token) {
 		return userCache.get(token);
 	}
 

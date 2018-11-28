@@ -1,7 +1,7 @@
 package org.jvalue.ods.auth.authenticator;
 
 import com.google.common.base.Optional;
-import org.jvalue.ods.auth.User;
+import org.jvalue.ods.auth.AuthUser;
 import org.jvalue.ods.communication.messaging.UserEvent;
 import org.jvalue.ods.communication.messaging.UserEventConsumer;
 import org.jvalue.ods.communication.messaging.UserEventHandler;
@@ -35,18 +35,18 @@ public class RemoteAuthenticator implements Authenticator {
 	}
 
 	@Override
-	public Optional<User> authenticate(String authHeader) {
-		User user = cache.getUser(authHeader);
-		if(user != null) {
+	public Optional<AuthUser> authenticate(String authHeader) {
+		AuthUser authUser = cache.getUser(authHeader);
+		if(authUser != null) {
 			// put hit
-			return Optional.of(user);
+			return Optional.of(authUser);
 		}
 
-		// get user from UserService
-		Optional<User> userOptional = remoteAuthenticationClient.authenticate(authHeader);
+		// get authUser from UserService
+		Optional<AuthUser> userOptional = remoteAuthenticationClient.authenticate(authHeader);
 
 		if(userOptional.isPresent()) {
-			// put user
+			// put authUser
 			cache.put(authHeader, userOptional.get());
 		}
 

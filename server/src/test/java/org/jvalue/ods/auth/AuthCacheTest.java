@@ -7,10 +7,7 @@ import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.configuration.MutableConfiguration;
-import javax.cache.expiry.CreatedExpiryPolicy;
-import javax.cache.expiry.Duration;
 import javax.cache.spi.CachingProvider;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
@@ -20,19 +17,19 @@ public class AuthCacheTest {
 	CachingProvider cachingProvider;
 	CacheManager cacheManager;
 
-	Cache<String, User> userCache;
+	Cache<String, AuthUser> userCache;
 	Cache<String, String> tokenCache;
 	AuthCache authCache;
 
 	String testToken = "test";
-	User testUser = new User("userId", "username", "test@user.de", Role.PUBLIC);
+	AuthUser testAuthUser = new AuthUser("userId", "username", "test@user.de", Role.PUBLIC);
 
 	@Before
 	public void setUp() {
 		cachingProvider = Caching.getCachingProvider();
 		cacheManager = cachingProvider.getCacheManager();
 
-		MutableConfiguration<String, User> userCacheConfig
+		MutableConfiguration<String, AuthUser> userCacheConfig
 			= new MutableConfiguration<>();
 		userCache = cacheManager
 			.createCache("userCache", userCacheConfig);
@@ -56,32 +53,32 @@ public class AuthCacheTest {
 	@Test
 	public void testGetWithoutPut() {
 		assertNull(authCache.getUser(testToken));
-		assertNull(authCache.getToken(testUser.getId()));
+		assertNull(authCache.getToken(testAuthUser.getId()));
 	}
 
 	@Test
 	public void testGetAfterPut() {
-		authCache.put(testToken, testUser);
-		assertEquals(testUser, authCache.getUser(testToken));
-		assertEquals(testToken, authCache.getToken(testUser.getId()));
+		authCache.put(testToken, testAuthUser);
+		assertEquals(testAuthUser, authCache.getUser(testToken));
+		assertEquals(testToken, authCache.getToken(testAuthUser.getId()));
 	}
 
 	@Test
 	public void testGetAfterInvalidateByToken() {
-		authCache.put(testToken, testUser);
+		authCache.put(testToken, testAuthUser);
 		authCache.invalidateByToken(testToken);
 
 		assertNull(authCache.getUser(testToken));
-		assertNull(authCache.getToken(testUser.getId()));
+		assertNull(authCache.getToken(testAuthUser.getId()));
 	}
 
 	@Test
 	public void testGetAfterInvalidateByUserId() {
-		authCache.put(testToken, testUser);
-		authCache.invalidateByUserId(testUser.getId());
+		authCache.put(testToken, testAuthUser);
+		authCache.invalidateByUserId(testAuthUser.getId());
 
 		assertNull(authCache.getUser(testToken));
-		assertNull(authCache.getToken(testUser.getId()));
+		assertNull(authCache.getToken(testAuthUser.getId()));
 	}
 
 

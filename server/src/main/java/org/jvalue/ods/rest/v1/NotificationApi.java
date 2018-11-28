@@ -18,7 +18,7 @@ import org.jvalue.ods.api.notifications.NdsClientDescription;
 import org.jvalue.ods.api.sources.DataSource;
 import org.jvalue.ods.auth.RestrictedTo;
 import org.jvalue.ods.auth.Role;
-import org.jvalue.ods.auth.User;
+import org.jvalue.ods.auth.AuthUser;
 import org.jvalue.ods.data.DataSourceManager;
 import org.jvalue.ods.notifications.NotificationManager;
 
@@ -56,7 +56,7 @@ public final class NotificationApi extends AbstractApi {
 	@PUT
 	@Path("/{clientId}")
 	public Client registerClient(
-			@RestrictedTo(Role.ADMIN) User user,
+			@RestrictedTo(Role.ADMIN) AuthUser authUser,
 			@PathParam("sourceId") String sourceId,
 			@PathParam("clientId") String clientId,
 			@Valid ClientDescription clientDescription) {
@@ -72,7 +72,7 @@ public final class NotificationApi extends AbstractApi {
 	@DELETE
 	@Path("/{clientId}")
 	public void unregisterClient(
-			@RestrictedTo(Role.ADMIN) User user,
+			@RestrictedTo(Role.ADMIN) AuthUser authUser,
 			@PathParam("sourceId") String sourceId,
 			@PathParam("clientId") String clientId) {
 

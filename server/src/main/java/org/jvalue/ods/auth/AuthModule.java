@@ -38,11 +38,11 @@ public final class AuthModule extends AbstractModule {
 		CachingProvider cachingProvider = Caching.getCachingProvider();
 		CacheManager cacheManager = cachingProvider.getCacheManager();
 
-		MutableConfiguration<String, User> userCacheConfig
+		MutableConfiguration<String, AuthUser> userCacheConfig
 			= new MutableConfiguration<>();
 		userCacheConfig.setExpiryPolicyFactory(CreatedExpiryPolicy.factoryOf(
 			new Duration(TimeUnit.SECONDS, CACHE_EXPIRES_AFTER_SECONDS)));
-		Cache<String, User> userCache = cacheManager
+		Cache<String, AuthUser> userCache = cacheManager
 			.createCache("userCache", userCacheConfig);
 
 		MutableConfiguration<String, String> tokenCacheConfig

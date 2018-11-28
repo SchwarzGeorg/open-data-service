@@ -8,9 +8,9 @@ import org.glassfish.jersey.server.internal.inject.AbstractContainerRequestValue
 import org.glassfish.jersey.server.internal.inject.AbstractValueFactoryProvider;
 import org.glassfish.jersey.server.internal.inject.MultivaluedParameterExtractorProvider;
 import org.glassfish.jersey.server.model.Parameter;
+import org.jvalue.ods.auth.AuthUser;
 import org.jvalue.ods.auth.RestrictedTo;
 import org.jvalue.ods.auth.Role;
-import org.jvalue.ods.auth.User;
 import org.jvalue.ods.auth.authenticator.Authenticator;
 import org.jvalue.ods.auth.exception.UnauthorizedException;
 
@@ -39,14 +39,14 @@ public final class RestrictedToProvider extends AbstractValueFactoryProvider {
 
 
 	@Override
-	protected Factory<User> createValueFactory(final Parameter parameter) {
+	protected Factory<AuthUser> createValueFactory(final Parameter parameter) {
 		Class<?> classType = parameter.getRawType();
-		if (classType == null || (!classType.equals(User.class))) return null;
+		if (classType == null || (!classType.equals(AuthUser.class))) return null;
 
 		// factory for getting user instances based on an http request
-		return new AbstractContainerRequestValueFactory<User>() {
+		return new AbstractContainerRequestValueFactory<AuthUser>() {
 			@Override
-			public User provide() {
+			public AuthUser provide() {
 				RestrictedTo restrictedToAnnotation = parameter.getAnnotation(RestrictedTo.class);
 				Role requiredRole = restrictedToAnnotation.value();
 				boolean isAuthOptional = restrictedToAnnotation.isOptional();
@@ -57,7 +57,7 @@ public final class RestrictedToProvider extends AbstractValueFactoryProvider {
 				String authHeader = headers.get(0);
 
 				// check authentication
-				Optional<User> user = Optional.absent();
+				Optional<AuthUser> user = Optional.absent();
 
 				// if basic or bearer authentication, then forward to UserService
 				if (authHeader.startsWith("Basic ")) user = authenticator.authenticate(authHeader);
@@ -71,7 +71,7 @@ public final class RestrictedToProvider extends AbstractValueFactoryProvider {
 				return user.get();
 			}
 
-			private User onUnauthorized(boolean isAuthOptional) {
+			private AuthUser onUnauthorized(boolean isAuthOptional) {
 				if (isAuthOptional) return null;
 				else throw new UnauthorizedException();
 			}

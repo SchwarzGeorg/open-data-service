@@ -9,7 +9,7 @@ import org.jvalue.ods.api.sources.DataSource;
 import org.jvalue.ods.api.sources.DataSourceDescription;
 import org.jvalue.ods.auth.RestrictedTo;
 import org.jvalue.ods.auth.Role;
-import org.jvalue.ods.auth.User;
+import org.jvalue.ods.auth.AuthUser;
 import org.jvalue.ods.data.DataSourceManager;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public final class DataSourceApi extends AbstractApi {
 	@PUT
 	@Path("/{sourceId}")
 	public DataSource addSource(
-			@RestrictedTo(Role.ADMIN) User user,
+			@RestrictedTo(Role.ADMIN) AuthUser authUser,
 			@PathParam("sourceId") String sourceId,
 			@Valid DataSourceDescription sourceDescription) {
 
@@ -80,7 +80,7 @@ public final class DataSourceApi extends AbstractApi {
 	@DELETE
 	@Path("/{sourceId}")
 	public void deleteSource(
-			@RestrictedTo(Role.ADMIN) User user,
+			@RestrictedTo(Role.ADMIN) AuthUser authUser,
 			@PathParam("sourceId") String sourceId) {
 
 		sourceManager.remove(sourceManager.findBySourceId(sourceId));

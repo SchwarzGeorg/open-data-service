@@ -29,8 +29,8 @@ public class RemoteAuthenticatorTest {
 	private UserEventConsumer userEventConsumer;
 
 
-	User testUser = new User(
-		"1", "Test User", "test@testUser.de", Role.ADMIN
+	AuthUser testAuthUser = new AuthUser(
+		"1", "Test AuthUser", "test@testAuthUser.de", Role.ADMIN
 	);
 
 	@Test
@@ -38,17 +38,17 @@ public class RemoteAuthenticatorTest {
 		String authHeader = "authHeader";
 		new Expectations() {{
 			remoteAuthenticationClient.authenticate(anyString);
-			result = Optional.of(testUser);
+			result = Optional.of(testAuthUser);
 
 			authCache.getUser(authHeader);
-			returns(null, testUser, testUser);
+			returns(null, testAuthUser, testAuthUser);
 		}};
 
 
 		RemoteAuthenticator remoteAuthenticator =
 			new RemoteAuthenticator(remoteAuthenticationClient, authCache, userEventConsumer);
 		// first call
-		Optional<User> user = remoteAuthenticator.authenticate(authHeader);
+		Optional<AuthUser> user = remoteAuthenticator.authenticate(authHeader);
 		assertIsTestUser(user);
 		// second call
 		user = remoteAuthenticator.authenticate(authHeader);
@@ -58,14 +58,14 @@ public class RemoteAuthenticatorTest {
 			remoteAuthenticationClient.authenticate(authHeader);
 			times = 1;
 
-			authCache.put(authHeader, testUser);
+			authCache.put(authHeader, testAuthUser);
 			times = 1;
 		}};
 	}
 
-	private void assertIsTestUser(Optional<User> user) {
+	private void assertIsTestUser(Optional<AuthUser> user) {
 		assertTrue(user.isPresent());
-		assertEquals(user.get(), this.testUser);
+		assertEquals(user.get(), this.testAuthUser);
 	}
 
 }

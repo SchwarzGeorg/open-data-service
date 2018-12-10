@@ -24,8 +24,17 @@ public class UserEvent {
 	}
 
 	public enum UserEventType {
-		USER_CREATED,
-		USER_UPDATED,
-		USER_DELETED
+		USER_CREATED("user.created"),
+		USER_UPDATED("user.updated"),
+		USER_DELETED("user.deleted");
+
+		String routingKey;
+		UserEventType(String routingKey) {
+			this.routingKey = routingKey;
+		}
+
+		String getRoutingKey() {
+			return this.routingKey;
+		}
 	}
 }

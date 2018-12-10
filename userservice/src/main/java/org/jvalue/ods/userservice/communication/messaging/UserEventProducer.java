@@ -26,19 +26,10 @@ public class UserEventProducer extends AbstractProducer{
 		String message = null;
 		try {
 			message = JsonMapper.writeValueAsString(userEvent);
-			return super.produce(getRoutingKey(userEvent), message.getBytes(StandardCharsets.UTF_8));
+			return super.produce(userEvent.getType().getRoutingKey(), message.getBytes(StandardCharsets.UTF_8));
 		} catch (JsonProcessingException e) {
 			Log.error("Could not convert UserEvent to JSON object!");
 			return false;
-		}
-	}
-
-	private String getRoutingKey(UserEvent userEvent) {
-		switch (userEvent.getType()) {
-			case USER_CREATED: return "user.created";
-			case USER_UPDATED: return "user.updated";
-			case USER_DELETED: return "user.deleted";
-			default: return "user";
 		}
 	}
 

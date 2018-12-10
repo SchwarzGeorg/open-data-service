@@ -136,6 +136,11 @@ The ODS has a number of [health checks](https://dropwizard.github.io/dropwizard/
 - `ods`: [http://localhost:8071/healthcheck](http://localhost:8071/healthcheck).
 - `userservice`: [http://localhost:8091/healthcheck](http://localhost:8091/healthcheck).
 
+
+## Additional information about filter and adapter
+
+- [Adapter](docs/adapter/Adapter.md)
+
 ## License
 Copyright 2014-2018 Friedrich-Alexander Universität Erlangen-Nürnberg
 

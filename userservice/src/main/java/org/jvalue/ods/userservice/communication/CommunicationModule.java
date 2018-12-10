@@ -16,9 +16,6 @@ public class CommunicationModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		UserEventProducer userEventProducer = new UserEventProducer(new ConnectionFactory(), messagingConfig);
-		if(!userEventProducer.connect()) {
-			throw new RuntimeException("Could not connect to RabbitMQ!");
-		}
 		bind(UserEventProducer.class).toInstance(userEventProducer);
 	}
 }

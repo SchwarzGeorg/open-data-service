@@ -10,29 +10,39 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 /**
- * Abstract Producer / Sender for RabbitMQ
+ * Producer / Sender for RabbitMQ
  */
-public abstract class AbstractProducer {
+public class RabbitmqProducer implements AmqProducer {
 
 	private ConnectionFactory factory;
 	private Connection connection;
 	private Channel channel;
+
 	@NotNull private final String brokerHost;
 	@NotNull private final String brokerVHost;
 	@NotNull private final String brokerPort;
 	@NotNull private final String brokerUsername;
 	@NotNull private final String brokerPassword;
 
-	protected AbstractProducer(
+	private final String exchangeName;
+	private final String exchangeType;
+
+	protected RabbitmqProducer(
 		ConnectionFactory factory,
-		MessagingConfig messagingConfig
+		MessagingConfig messagingConfig,
+		String exchangeName,
+		String exchangeType
 	) {
 		this.factory = factory;
+
 		this.brokerHost = messagingConfig.getBrokerHost();
 		this.brokerVHost = messagingConfig.getBrokerVHost();
 		this.brokerPort = messagingConfig.getBrokerPort();
 		this.brokerUsername = messagingConfig.getBrokerUserName();
 		this.brokerPassword = messagingConfig.getBrokerPassword();
+
+		this.exchangeName = exchangeName;
+		this.exchangeType = exchangeType;
 	}
 
 
@@ -47,7 +57,7 @@ public abstract class AbstractProducer {
 			Log.info("Connect to RabbitMQ server: " + this.toString());
 			connection = factory.newConnection();
 			channel = connection.createChannel();
-			doSetupBroker(channel);
+			this.setupBroker(channel);
 		} catch (IOException | TimeoutException e) {
 			Log.error("Unable to connect to RabbitMQ server: " + this.toString(), e);
 			return false;
@@ -55,17 +65,10 @@ public abstract class AbstractProducer {
 		return true;
 	}
 
-	/**
-	 * Setup the broker here.
-	 * Especially define exchange!
-	 * @param channel
-	 * @throws IOException
-	 */
-	protected abstract void doSetupBroker(Channel channel) throws IOException;
-
-	protected final boolean produce(String routingKey, byte[] message) {
+	public final boolean produce(String routingKey, byte[] message) {
 		try {
-			doProduce(channel, routingKey, message);
+			channel.basicPublish(exchangeName, routingKey, null, message);
+
 			Log.debug("[x] Sent '" + message + "' to " + toString());
 			return true;
 		} catch (NullPointerException | IOException e) {
@@ -73,16 +76,6 @@ public abstract class AbstractProducer {
 			return false;
 		}
 	}
-
-	/**
-	 * Implement the pure sending.
-	 * Be sure to send matching props.
-	 * @param channel
-	 * @param routingKey
-	 * @param message
-	 * @throws IOException
-	 */
-	protected abstract void doProduce(Channel channel, String routingKey, byte[] message) throws IOException ;
 
 	public void close() {
 		Log.info("Close connection to RabbitMq server: " + toString());
@@ -98,6 +91,15 @@ public abstract class AbstractProducer {
 		}
 	}
 
+	protected void setupBroker(Channel channel) throws IOException {
+		channel.exchangeDeclare(exchangeName, exchangeType);
+	}
 
-	public abstract String toString();
+	public String toString() {
+		return "{brokerHost: '" + brokerHost +
+			"', brokerVHost: '" + brokerVHost +
+			"', brokerPort: '" + brokerPort +
+			"', exchange_name: '" + exchangeName +
+			"', exchange_type: '" + exchangeType + "'}";
+	}
 }

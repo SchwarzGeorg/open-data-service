@@ -55,7 +55,7 @@ public final class AuthModule extends AbstractModule {
 		bind(AuthCache.class).toInstance(new AuthCache(userCache, tokenCache));
 
 		// bind RemoteAuthenticator
-		// (make sure RemoteAuthencationClient, AuthCache and UserEventConsumer are already registered!)
+		// (make sure RemoteAuthencationClient, AuthCache and UserEventMessagingManager are already registered!)
 		bind(Authenticator.class).to(RemoteAuthenticator.class);
 	}
 

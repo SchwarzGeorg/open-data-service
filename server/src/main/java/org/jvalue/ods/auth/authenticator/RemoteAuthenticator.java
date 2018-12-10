@@ -2,9 +2,9 @@ package org.jvalue.ods.auth.authenticator;
 
 import com.google.common.base.Optional;
 import org.jvalue.ods.auth.AuthUser;
-import org.jvalue.ods.communication.messaging.UserEvent;
-import org.jvalue.ods.communication.messaging.UserEventConsumer;
-import org.jvalue.ods.communication.messaging.UserEventHandler;
+import org.jvalue.ods.communication.messaging.event.UserEvent;
+import org.jvalue.ods.communication.messaging.UserEventMessagingManager;
+import org.jvalue.ods.communication.messaging.event.UserEventHandler;
 
 import javax.inject.Inject;
 
@@ -18,12 +18,12 @@ public class RemoteAuthenticator implements Authenticator {
 	public RemoteAuthenticator(
 		RemoteAuthenticationClient remoteAuthenticationClient,
 		AuthCache authCache,
-		UserEventConsumer userEventConsumer
+		UserEventMessagingManager userEventMessagingManager
 	) {
 		this.remoteAuthenticationClient = remoteAuthenticationClient;
 		this.cache = authCache;
 
-		userEventConsumer.registerEventHandler(new UserEventHandler() {
+		userEventMessagingManager.registerEventHandler(new UserEventHandler() {
 			@Override
 			public void handleEvent(UserEvent userEvent) {
 				if(userEvent.getType() == UserEvent.UserEventType.USER_UPDATED ||

@@ -1,11 +1,11 @@
-package org.jvalue.ods.communication.messaging;
+package org.jvalue.ods.communication.messaging.event;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotNull;
 
-public class UserEvent {
+public class UserEvent extends MessagingEvent {
 	@NotNull private UserEventType type;
 	@NotNull private String userId;
 

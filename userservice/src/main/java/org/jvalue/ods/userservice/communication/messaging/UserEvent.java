@@ -2,25 +2,26 @@ package org.jvalue.ods.userservice.communication.messaging;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jvalue.ods.userservice.user.User;
 
 import javax.validation.constraints.NotNull;
 
 public class UserEvent {
 	@NotNull private UserEventType type;
-	@NotNull private String userId;
+	@NotNull private User data;
 
 	@JsonCreator
-	public UserEvent(@JsonProperty("type") UserEventType type, @JsonProperty("userId") String userId) {
+	public UserEvent(@JsonProperty("type") UserEventType type, @JsonProperty("data") User data) {
 		this.type = type;
-		this.userId = userId;
+		this.data = data;
 	}
 
 	public UserEventType getType() {
 		return type;
 	}
 
-	public String getUserId() {
-		return userId;
+	public User getData() {
+		return data;
 	}
 
 	public enum UserEventType {

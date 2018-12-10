@@ -28,7 +28,7 @@ public class RemoteAuthenticator implements Authenticator {
 			public void handleEvent(UserEvent userEvent) {
 				if(userEvent.getType() == UserEvent.UserEventType.USER_UPDATED ||
 					userEvent.getType() == UserEvent.UserEventType.USER_DELETED) {
-					authCache.invalidateByUserId(userEvent.getUserId());
+					authCache.invalidateByUserId(userEvent.getData().getId());
 				}
 			}
 		});

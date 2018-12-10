@@ -94,7 +94,7 @@ public final class UserManager {
 		credentialsRepository.add(credentials);
 
 		Log.info("added user " + user.getId());
-		userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user.getId()));
+		userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user));
 		return user;
 	}
 
@@ -110,7 +110,7 @@ public final class UserManager {
 		userRepository.add(user);
 
 		Log.info("added user " + user.getId());
-		userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user.getId()));
+		userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user));
 		return user;
 	}
 
@@ -120,7 +120,7 @@ public final class UserManager {
 		try {
 			BasicCredentials credentials = credentialsRepository.findById(user.getId());
 			credentialsRepository.remove(credentials);
-			userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_DELETED, user.getId()));
+			userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_DELETED, user));
 		} catch (DocumentNotFoundException dnfe) {
 			// user wasn't using basic auth
 		}

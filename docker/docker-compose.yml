@@ -1,33 +1,5 @@
 version: '3'
 services:
-  ods:
-    image: mojo-docker.cs.fau.de/osrg_ods_public/ods-server-cd:latest
-    ports:
-      - "8070:8080"
-      - "8071:8081"
-    environment:
-      - COUCHDB_MAX_CONNECTIONS=100
-      - ODS_ADMIN_CONTEXT_PATH=/
-      - ODS_CONTEXT_PATH=/ods
-      - ODS_ADMIN_PASSWORD=admin123
-      - COUCHDB_URL=http://couchdb:5984/
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=admin
-      - USER_SERVICE_URL=http://userservice:8080/ods/api/v1
-      - USER_SERVICE_HEALTH_URL=http://userservice:8081/healthcheck
-      - MESSAGE_BROKER_HOST=rabbitmq
-      - MESSAGE_BROKER_VHOST=/
-      - MESSAGE_BROKER_PORT=5672
-      - MESSAGE_BROKER_MANAGEMENT_PORT=15672
-      - MESSAGE_BROKER_USERNAME=guest
-      - MESSAGE_BROKER_PASSWORD=guest
-    labels: # traefic reverse-proxy config
-      - "traefik.backend=userservice"
-      - "traefik.frontend.rule=PathPrefix:/ods/api/v{[0-9]+}/"
-      - "traefik.frontend.passHostHeader=true"
-      - "traefik.docker.network=backend"
-    networks:
-      - backend
 
   userservice:
     image: mojo-docker.cs.fau.de/osrg_ods_public/ods-userservice-cd:latest
@@ -48,21 +20,6 @@ services:
       - MESSAGE_BROKER_MANAGEMENT_PORT=15672
       - MESSAGE_BROKER_USERNAME=guest
       - MESSAGE_BROKER_PASSWORD=guest
-    labels: # traefic reverse-proxy config
-      - "traefik.backend=ods"
-      - "traefik.frontend.rule=PathPrefix:/ods/api/v{[0-9]+}/users"
-      - "traefik.frontend.passHostHeader=true"
-      - "traefik.docker.network=backend"
-    networks:
-      - backend
-
-  couchdb:
-    image: couchdb
-    ports:
-      - "5984:5984"
-    environment:
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=admin
     networks:
       - backend
 
@@ -75,30 +32,6 @@ services:
       - COUCHDB_PASSWORD=admin
     networks:
       - backend
-
-  rabbitmq:
-    image: rabbitmq:3.7.8-management
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-    labels:
-      NAME: "rabbitmq"
-    volumes:
-      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
-    networks:
-      - backend
-
-  reverse-proxy:
-    image: traefik # The official Traefik docker image
-    command: --api --docker # Enables the web UI and tells Traefik to listen to docker
-    ports:
-      - "8080:80"     # The HTTP port
-      - "8081:8080"   # The Web UI (enabled by --api)
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
-    networks:
-      - backend
-
 networks:
   backend:
     driver: "bridge"

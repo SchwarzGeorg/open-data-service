@@ -44,14 +44,13 @@ public final class UserApi extends AbstractApi {
 	}
 
 
-	@PUT
-	@Path("/me")
-	public User addUser(@RestrictedTo(value = Role.ADMIN, isOptional = true) User user, AbstractUserDescription userDescription) {
+	@POST
+	public User addUser(@RestrictedTo(value = Role.ADMIN, isOptional = true) User user, BasicAuthUserDescription userDescription) {
 		// check for valid role (only admins can add admins)
 		if (userDescription.getRole().equals(Role.ADMIN) && user == null) throw new UnauthorizedException("missing admin privileges");
 
-		if (userDescription instanceof BasicAuthUserDescription) return addUser((BasicAuthUserDescription) userDescription);
-		else return addUser((OAuthUserDescription) userDescription);
+		/*if (userDescription instanceof BasicAuthUserDescription) */ return addUser((BasicAuthUserDescription) userDescription);
+		//else return addUser((OAuthUserDescription) userDescription);
 	}
 
 

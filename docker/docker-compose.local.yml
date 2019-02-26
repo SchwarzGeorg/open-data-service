@@ -1,6 +1,4 @@
 version: '3'
 services:
-  ods:
-    image: osrg_ods_public/ods-server-cd:latest
   userservice:
     image: osrg_ods_public/ods-userservice-cd:latest

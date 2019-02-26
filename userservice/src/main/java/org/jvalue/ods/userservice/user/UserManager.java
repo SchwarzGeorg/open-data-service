@@ -81,7 +81,8 @@ public final class UserManager {
 				"password must have at least 8 characters and contain numbers");
 
 		// store new user
-		String userId = UUID.randomUUID().toString();
+		//String userId = UUID.randomUUID().toString();
+		String userId = userDescription.getEmail();
 		User user = new User(userId, userDescription.getName(), userDescription.getEmail(), userDescription.getRole());
 
 		// store user
@@ -94,7 +95,7 @@ public final class UserManager {
 		credentialsRepository.add(credentials);
 
 		Log.info("added user " + user.getId());
-		userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user));
+		//userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user));
 		return user;
 	}
 
@@ -110,7 +111,7 @@ public final class UserManager {
 		userRepository.add(user);
 
 		Log.info("added user " + user.getId());
-		userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user));
+		//userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_CREATED, user));
 		return user;
 	}
 
@@ -120,7 +121,7 @@ public final class UserManager {
 		try {
 			BasicCredentials credentials = credentialsRepository.findById(user.getId());
 			credentialsRepository.remove(credentials);
-			userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_DELETED, user));
+			//userEventProducer.publishUserEvent(new UserEvent(UserEvent.UserEventType.USER_DELETED, user));
 		} catch (DocumentNotFoundException dnfe) {
 			// user wasn't using basic auth
 		}

@@ -112,16 +112,16 @@ public final class UserServiceApplication extends Application<UserServiceConfig>
 	}
 
 	private void assertRabbitMqIsReady(MessagingConfig messagingConfig) {
-		String rabbitMqHealthCheckUrl = "http://"
-				+ messagingConfig.getBrokerUserName()
-				+ ":"
-				+ messagingConfig.getBrokerPassword()
-				+ "@"
-				+ messagingConfig.getBrokerHost()
-				+ ":"
-				+ messagingConfig.getBrokerManagementPort();
-		if (!HttpServiceCheck.check(rabbitMqHealthCheckUrl)) {
-			throw new RuntimeException("RabbitMQ is not ready [" + rabbitMqHealthCheckUrl+ "]");
-		}
+//		String rabbitMqHealthCheckUrl = "http://"
+//				+ messagingConfig.getBrokerUserName()
+//				+ ":"
+//				+ messagingConfig.getBrokerPassword()
+//				+ "@"
+//				+ messagingConfig.getBrokerHost()
+//				+ ":"
+//				+ messagingConfig.getBrokerManagementPort();
+//		if (!HttpServiceCheck.check(rabbitMqHealthCheckUrl)) {
+//			throw new RuntimeException("RabbitMQ is not ready [" + rabbitMqHealthCheckUrl+ "]");
+//		}
 	}
 }

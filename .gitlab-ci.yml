@@ -39,6 +39,9 @@ docker-build-ods:
         - build-ods
 
 docker-compose-ods:
+    image: docker:stable
+    services:
+        - docker:dind
     stage: acceptance-integration-test
     script: "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up -d"
 

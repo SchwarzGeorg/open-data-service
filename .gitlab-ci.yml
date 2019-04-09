@@ -35,7 +35,8 @@ docker-build-ods:
         - docker:dind
     stage: acceptance-docker-build
     script: "docker build -t osrg_ods_public/ods-cd:latest ./docker/ods"
-    # copying is done by build-ods task
+	dependencies: # copying is done by build-ods task
+		- build-ods
 
 docker-compose-ods:
     stage: acceptance-integration-test

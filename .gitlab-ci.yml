@@ -9,8 +9,9 @@ stages:
 
 #TODO: docker environment config
 
-before_script:
-    - "docker login -u $ODS_DOCKER_USR -p $ODS_DOCKER_PSW https://mojo-docker.cs.fau.de"
+
+#before_script:
+#    - "docker login -u $ODS_DOCKER_USR -p $ODS_DOCKER_PSW https://mojo-docker.cs.fau.de"
 
 build-ods:
     stage: build

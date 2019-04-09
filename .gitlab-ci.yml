@@ -25,6 +25,9 @@ unit-tests-ods:
             junit: '*/build/test-results/**/*.xml'
 
 docker-build-ods:
+    image: docker:stable
+    services:
+        - docker:dind
     stage: acceptance-docker-build
     script: "./gradlew dockerBuild"
 

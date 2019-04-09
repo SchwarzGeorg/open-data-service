@@ -1,3 +1,5 @@
+image: java:10-jdk
+
 stages:
 	- build
 	- acceptance-unit-test

@@ -20,7 +20,7 @@ build-ods:
         - "./gradlew copyDockerAssets" # copy it for docker task
     artifacts:
         paths:
-			- "./docker/ods/assets/" # hand it to docker task
+			- "./docker/ods/" # hand it to docker task
 
 unit-tests-ods:
     stage: acceptance-unit-test

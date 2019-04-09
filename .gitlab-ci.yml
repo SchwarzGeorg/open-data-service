@@ -1,43 +1,43 @@
 image: java:10-jdk
 
 stages:
-	- build
-	- acceptance-unit-test
-	- acceptance-docker-build
-	- acceptance-integration-test
-	- release
+    - build
+    - acceptance-unit-test
+    - acceptance-docker-build
+    - acceptance-integration-test
+    - release
 
 #TODO: docker environment config
 
 before_script:
-	- "docker login -u $ODS_DOCKER_USR -p $ODS_DOCKER_PSW https://mojo-docker.cs.fau.de"
+    - "docker login -u $ODS_DOCKER_USR -p $ODS_DOCKER_PSW https://mojo-docker.cs.fau.de"
 
 build-ods:
-	stage: build
-	script: "./gradlew clean build -x test"
+    stage: build
+    script: "./gradlew clean build -x test"
 
 unit-tests-ods:
-	stage: acceptance-unit-test
-	script: "./gradlew test"
-	artifacts:
-		reports:
-			junit: '*/build/test-results/**/*.xml'
+    stage: acceptance-unit-test
+    script: "./gradlew test"
+    artifacts:
+        reports:
+            junit: '*/build/test-results/**/*.xml'
 
 docker-build-ods:
-	stage: acceptance-docker-build
-	script: "./gradlew dockerBuild"
+    stage: acceptance-docker-build
+    script: "./gradlew dockerBuild"
 
 docker-compose-ods:
-	stage: acceptance-integration-test
-	script: "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up -d"
+    stage: acceptance-integration-test
+    script: "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up -d"
 
 integration-tests-ods:
-	stage: acceptance-integration-test
-	script: "./gradlew integrationTest"
+    stage: acceptance-integration-test
+    script: "./gradlew integrationTest"
 
 #docker-push-ods:
-#	stage: release
-#	script: "./gradlew dockerPush"
+#    stage: release
+#    script: "./gradlew dockerPush"
 
 after_script:
-	- "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml stop"
+    - "docker-compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml stop"

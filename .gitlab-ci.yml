@@ -16,6 +16,8 @@ stages:
 build-ods:
     stage: build
     script: "./gradlew clean build -x test"
+    after_script:
+        - "./gradlew copyDockerAssets"
 
 unit-tests-ods:
     stage: acceptance-unit-test
@@ -29,7 +31,7 @@ docker-build-ods:
     services:
         - docker:dind
     stage: acceptance-docker-build
-    script: "./gradlew dockerBuild"
+    script: "docker build -t osrg_ods_public/ods-cd:latest ."
 
 docker-compose-ods:
     stage: acceptance-integration-test

@@ -31,7 +31,7 @@ docker-build-ods:
     services:
         - docker:dind
     stage: acceptance-docker-build
-    script: "docker build -t osrg_ods_public/ods-cd:latest ."
+    script: "docker build -t osrg_ods_public/ods-cd:latest ./docker/ods"
 
 docker-compose-ods:
     stage: acceptance-integration-test
